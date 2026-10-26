@@ -33,6 +33,7 @@ public class CommandHandler
         commandToHandler[Command.DROP] = HandleDrop;
         commandToHandler[Command.ATTACK] = HandleAttack;
         commandToHandler[Command.INVENTORY] = HandleInventory;
+        commandToHandler[Command.LOOK] = HandleLook;
         commandToHandler[Command.EXIT] = HandleExit;
     }
 
@@ -44,6 +45,7 @@ public class CommandHandler
         if (!AllCommmands.TryGetValue(commandString, out Command command))
         {
             // Error Message (Not a valid command)
+            Console.WriteLine($"Error: {commandString} is not a valid command\n");
             return;
         }
 
@@ -64,10 +66,30 @@ public class CommandHandler
 
     public void HandlePick(params string[] args)
     {
+        foreach (string arg in args)
+        {
+            if (!Item.Get(arg, out Item? item))
+            {
+                // User Error: {arg} is not an item
+                Console.WriteLine($"Error: {arg} is not an item");
+                continue;
+            }
+            _game.Pick(item.ID);
+        }
     }
 
     public void HandleDrop(params string[] args)
     {
+        foreach (string arg in args)
+        {
+            if (!Item.Get(arg, out Item? item))
+            {
+                // User Error: {arg} is not an item
+                Console.WriteLine($"Error: {arg} is not an item");
+                continue;
+            }
+            _game.Drop(item.ID);
+        }
     }
 
     public void HandleAttack(params string[] args)
@@ -76,6 +98,24 @@ public class CommandHandler
 
     public void HandleInventory(params string[] args)
     {
+        if (args.Length > 0)
+        {
+            // User Warning: Inventory Command doesn't require any arguments
+            Console.WriteLine($"Warning: Inventory command doesn't require any arguments");
+            return;
+        }
+        _game.ShowInventory();
+    }
+
+    public void HandleLook(params string[] args)
+    {
+        if (args.Length > 0)
+        {
+            // User Warning: Look Command doesn't require any arguments
+            Console.WriteLine($"Warning: Look command doesn't require any arguments");
+            return;
+        }
+        _game.ShowRoomDetails();
     }
 
     public void HandleExit(params string[] args)

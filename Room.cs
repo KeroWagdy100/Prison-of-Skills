@@ -20,13 +20,23 @@ public class Room
 
         set
         {
-            if (value < 0)  throw new ArgumentException("Coins cannot be -ve");
+            if (value < 0) throw new ArgumentException("Coins cannot be -ve");
             _coins = value;
         }
     }
+    public void ShowInfo()
+    {
+        Console.WriteLine($"Items: ");
+        _inventory.ShowItems();
+        Console.WriteLine($"Coins: {_coins}");
+    }
 
-    public string Description {get; set;} = "";
-    public Guid? RequiredKey {get; set;}
-    public bool HasWitch {get; set;} = false;
-    public Guid? Monster {get; set;}
+    public bool HasItem(Guid itemId)
+        => _inventory.HasItem(itemId);
+
+
+    public string Description { get; set; } = "";
+    public Guid? RequiredKey { get; set; }
+    public bool HasWitch { get; set; } = false;
+    public Guid? Monster { get; set; }
 }

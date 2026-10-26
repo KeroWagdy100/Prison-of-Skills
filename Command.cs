@@ -7,5 +7,6 @@ public enum Command
     DROP,
     ATTACK,
     INVENTORY,
+    LOOK,
     EXIT
 }

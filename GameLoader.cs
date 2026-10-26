@@ -82,6 +82,8 @@ public class GameLoader
 
         foreach (RoomDto roomDto in gameDto.Rooms)
         {
+            Logger.Log($"Loading Room at {roomDto.PosX}, {roomDto.PosY}");
+
             Room room = rooms[roomDto.PosX, roomDto.PosY] = new Room();
             room.Coins = roomDto.Coins ?? 0;
             room.Description = roomDto.Description;
@@ -95,10 +97,14 @@ public class GameLoader
 
             // Adding room items
             foreach (string itemName in roomDto.Items ?? [])
+            {
                 if (Item.Get(itemName, out Item? item))
+                {
                     room.Add(item.ID);
+                    Logger.Log($"Added Item: {item.Name}");
+                }
+            }
             
-            Logger.Log($"Loaded Room at {roomDto.PosX}, {roomDto.PosY}");
             Logger.Log($"Coins: {room.Coins}");
             Logger.Log($"Desc: {room.Description}");
             Logger.Log($"HasWitch: {room.HasWitch}");

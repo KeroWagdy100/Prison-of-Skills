@@ -18,9 +18,9 @@ public abstract class Item
     public static bool Get(string itemName, [MaybeNullWhen(false)] out Item item)
     {
         item = null;
-        if (!allItems.Any(pair => pair.Value.Name == itemName))
+        if (!allItems.Any(pair => string.Equals(pair.Value.Name, itemName, StringComparison.OrdinalIgnoreCase)))
             return false;
-        item = allItems.First(pair => pair.Value.Name == itemName).Value;
+        item = allItems.First(pair => string.Equals(pair.Value.Name, itemName, StringComparison.OrdinalIgnoreCase)).Value;
         return item is not null;
     }
 }
