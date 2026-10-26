@@ -80,5 +80,6 @@ public class CommandHandler
 
     public void HandleExit(params string[] args)
     {
+        _game.Exit();
     }
 }

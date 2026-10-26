@@ -7,7 +7,7 @@ public record GameDto
 
     public List<ItemDto> Items { get; set; } = [];
     public List<MonsterDto> Monsters { get; set; } = [];
-    public List<Room> Rooms { get; set; } = [];
+    public List<RoomDto> Rooms { get; set; } = [];
 }
 
 public record ItemDto
@@ -25,7 +25,7 @@ public record MonsterDto
     public int? RewardCoins { get; set; } = 0;
 }
 
-public class Room
+public class RoomDto
 {
     public int PosX { get; set; }
     public int PosY { get; set; }

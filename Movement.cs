@@ -22,14 +22,14 @@ public struct Position
 }
 
 
-public class Movement
+public class Movement(int BoundWidth, int BoundHeight, Position initalPosition = default)
 {
     private readonly static int[] dx = [-1, 1, 0, 0];
     private readonly static int[] dy = [0, 0, -1, 1];
 
-    public Position Pos { get; private set; } = new Position{x = 0, y = 0};
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public Position Pos { get; private set; } = initalPosition;
+    public int Width { get; set; } = BoundWidth;
+    public int Height { get; set; } = BoundHeight;
 
 
     public bool MoveTo(Direction direction)

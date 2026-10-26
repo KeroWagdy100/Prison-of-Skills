@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace zelda_game;
@@ -8,43 +7,24 @@ public class Game
     private bool IsRunning { get; set; } = false;
     private readonly Player Player = new();
 
-    private List<Item> Items { get; set; } = [];
-    private List<Room> Rooms { get; set; } = [];
+    private  Room[,] Rooms { get; set; } = new Room[1,1];
+    private Movement Movement = new(1, 1);
 
     readonly private CommandHandler Handler;
-    readonly private Movement Movement;
 
     // -----------------------------------------
     // Initializes the game with the given filename
-    public Game(string filename)
+    public Game()
     {
         Handler = new(this);
-        Movement = new();
-
         Logger.Clear();
-        LoadGame(filename);
     }
 
-    private void LoadGame(string filename)
+    public void Init(string filename)
     {
-        if (!File.Exists(filename))
-            throw new ArgumentException($"{filename} does not exist. Please ensure the file exists.");
-
-        GameDto gameDto = new();
-        try
-        {
-            string s = File.ReadAllText(filename);
-            gameDto = JsonSerializer.Deserialize<GameDto>(s) ?? throw new InvalidDataException();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed to load game data ({filename} is not well formatted)");
-            Console.WriteLine($"Please check and validate Game DTO structure and try again.");
-            Logger.Log(ex);
-        }
-
-        Movement.Width = gameDto.Width;
-        Movement.Height = gameDto.Height;
+        GameLoader.LoadGame(filename, out var rooms, out var movement);
+        Rooms = rooms;
+        Movement = movement;
     }
 
     public void Run()
@@ -74,6 +54,7 @@ public class Game
         }
         Console.WriteLine($"Moved to {Movement.Pos}");
     }
+
 
     public void Exit()
     {
