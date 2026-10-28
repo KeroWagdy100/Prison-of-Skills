@@ -28,12 +28,12 @@ public class Game
         Movement = movement;
     }
 
-    public async Task Run()
+    public void Run()
     {
         IsRunning = true;
         System.Console.Clear();
-        await ShowIntro();
-        await ShowCommands();
+        ShowIntro();
+        ShowCommands();
 
         while (IsRunning)
         {
@@ -48,11 +48,11 @@ public class Game
         }
     }
 
-    public async Task ShowIntro()
-        => await Console.SlowPrint(Console.GetStaticText("intro"));
+    public void ShowIntro()
+        => Console.SlowPrint(Console.GetStaticText("intro"));
 
-    public async Task ShowCommands()
-        => await Console.SlowPrint(Console.GetStaticText("commands"));
+    public void ShowCommands()
+        => Console.SlowPrint(Console.GetStaticText("commands"));
 
     public void Move(Direction direction)
     {
@@ -73,11 +73,11 @@ public class Game
         {
             if (myBagSkills.Any(skill => skill.Type == obs.DefeatedBy))
             {
-                Console.Story($"Hmmm.. it sounds like you have defeated {obs.Name} because you have a skill of type {obs.DefeatedBy} that defeated {obs.Name}");
+                Console.SlowPrint($"Hmmm.. it sounds like you have defeated {obs.Name} because you have a skill of type {obs.DefeatedBy} that defeated {obs.Name}");
             }
             else
             {
-                Console.Story($"OOPS... you've wasted {obs.TimeCost} months becuase you don't have the required skill type {obs.DefeatedBy}");
+                Console.SlowPrint($"OOPS... you've wasted {obs.TimeCost} months becuase you don't have the required skill type {obs.DefeatedBy}");
                 MyBag.TotalCost += obs.TimeCost;
                 costChanged = true;
             }

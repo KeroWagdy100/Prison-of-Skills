@@ -72,7 +72,7 @@ public static class Console
                 .SearchPlaceholderText("Type to search...")
         );
 
-    public static async Task SlowPrint(string text)
+    public static void SlowPrint(string text)
     {
         AnsiConsole.MarkupLine("[dim italic on black]Press Space/Escape/Enter to skip[/]");
         text = AnsiMarkup.Remove(text);
@@ -100,7 +100,8 @@ public static class Console
             int delayInMilliSeconds = random.Next(20, 80);
             if (text[i] == '\n')
                 delayInMilliSeconds += 200;
-            await Task.Delay(delayInMilliSeconds);
+            Thread.Sleep(delayInMilliSeconds);
+            // await Task.Delay(delayInMilliSeconds);
         }
 
         if (skip)
