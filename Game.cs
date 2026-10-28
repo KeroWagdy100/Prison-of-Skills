@@ -33,6 +33,7 @@ public class Game
         IsRunning = true;
         System.Console.Clear();
         await ShowIntro();
+        await ShowCommands();
 
         while (IsRunning)
         {
@@ -98,13 +99,13 @@ public class Game
         Console.Confirm($"Dropped {skill.Name}.");
     }
 
-    public void ShowBagSkills()
+    public void ShowBag()
     {
         var list = MyBag.GetSkills();
         Console.NormalText($"Current Bag Skills: {string.Join('\n', list)}");
     }
 
-    public void ShowCellDetails()
+    public void ShowCell()
     {
         Console.NormalText("Current Cell: ");
         CurrentCell.ShowInfo();

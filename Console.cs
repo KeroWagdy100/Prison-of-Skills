@@ -13,10 +13,12 @@ public static class Console
 
     private readonly static Dictionary<string, string> _staticText = [];
 
+
     private static void Print(string str, string color)
-    {
-        AnsiConsole.MarkupLine($"[{color}]{str}[/]");
-    }
+        => AnsiConsole.MarkupLine($"[{color}]{str}[/]");
+
+    public static void Clear()
+        => AnsiConsole.Clear();
 
     public static void Error(string err)
         => Print(err, _errorColor);
@@ -48,16 +50,18 @@ public static class Console
         return text;
     }
 
+    // returns CANCEL if user cancels.
     public static List<string> MultiSelectionPrompt(string prompt, string[] choices)
     {
         return AnsiConsole.Prompt(
-            new MultiSelectionPrompt<string>().Title(prompt).AddChoices(choices)
+            new MultiSelectionPrompt<string>().Title(prompt).AddChoices(choices).AddCancelResult("CANCEL")
         );
     }
 
+    // returns CANCEL if user cancels.
     public static string SelectionPrompt(string prompt, string[] choices)
         => AnsiConsole.Prompt(
-            new SelectionPrompt<string>().Title(prompt).AddChoices(choices)
+            new SelectionPrompt<string>().Title(prompt).AddChoices(choices).AddCancelResult("CANCEL")
         );
 
     public static async Task SlowPrint(string text)

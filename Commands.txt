@@ -3,5 +3,6 @@ MOVE <LEFT/RIGHT/UP/DOWN>
 SHOW <CELL/BAG> # shows current cell info/your bag of skills
 PICK <skill_name> # skill must be currently available in the cell
 DROP <skill_name> # skill must be currently in your bag of skills
+CLEAR # clear screen
 RESTART
 EXIT

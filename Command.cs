@@ -6,6 +6,7 @@ public enum Command
     SHOW,
     PICK,
     DROP,
+    CLEAR,
     RESTART,
     EXIT
 }

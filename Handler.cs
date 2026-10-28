@@ -34,6 +34,7 @@ public class CommandHandler
         commandToHandler[Command.PICK] = HandlePick;
         commandToHandler[Command.DROP] = HandleDrop;
         commandToHandler[Command.SHOW] = HandleShow;
+        commandToHandler[Command.CLEAR] = HandleClear;
         commandToHandler[Command.RESTART] = HandleRestart;
         commandToHandler[Command.EXIT] = HandleExit;
     }
@@ -136,15 +137,36 @@ public class CommandHandler
 
     public void HandleShow(params string[] args)
     {
-        if (args.Length > 0)
+        string[] choices = ["BAG", "CELL"];
+        if (args.Length > 1)
         {
-            // User Warning: Skills Bag Command doesn't require any arguments
-            Console.Warning($"Warning: Inventory command doesn't require any arguments");
+            Console.Warning($"Warning: Show command can have maximum 1 argument.");
             return;
         }
-        _game.ShowBagSkills();
+        string? choice = null;
+        if (args.Length == 1)
+        {
+            args[0] = args[0].ToUpper();
+            if (args[0] == "BAG" || args[0] == "CELL")
+                choice = args[0];
+            else
+                Console.Error($"[bold]{args[0]}[/] is not a valid choice.");
+        }
+
+        if (choice == null)
+        {
+            choice = Console.SelectionPrompt("What to show info about?", choices);
+            if (choice == "CANCEL") return;
+        }
+
+        if (choice == "BAG")
+            _game.ShowBag();
+        else
+            _game.ShowCell();
     }
 
+    public void HandleClear(params string[] args)
+        => Console.Clear();
 
     public void HandleRestart(params string[] args)
     {
