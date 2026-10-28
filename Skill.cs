@@ -53,4 +53,7 @@ public class Skill
     }
 
     private Skill() {}
+
+    public override string ToString()
+        => $"{Name} of type {Type} costs {TimeCost}m and gives {Strength} points.";
 }

@@ -1,5 +1,7 @@
-﻿using zelda_game;
+﻿using System.Security.Cryptography;
+using Spectre.Console;
+using zelda_game;
 
 Game Game = new();
 Game.Init("Game.json");
-Game.Run();
+await Game.Run();

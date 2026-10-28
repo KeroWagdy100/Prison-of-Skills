@@ -33,15 +33,14 @@ public class CommandHandler
         commandToHandler[Command.MOVE] = HandleMove;
         commandToHandler[Command.PICK] = HandlePick;
         commandToHandler[Command.DROP] = HandleDrop;
-        commandToHandler[Command.ATTACK] = HandleAttack;
-        commandToHandler[Command.INVENTORY] = HandleInventory;
-        commandToHandler[Command.LOOK] = HandleLook;
+        commandToHandler[Command.SHOW] = HandleShow;
+        commandToHandler[Command.RESTART] = HandleRestart;
         commandToHandler[Command.EXIT] = HandleExit;
     }
 
     public void Handle(string line)
     {
-        var words = line.Trim().Split();
+        var words = line.Trim().Split().Where(word => !string.IsNullOrEmpty(word)).ToArray();
         string commandString = words[0];
 
         if (!_allCommands.TryGetValue(commandString.ToUpper(), out Command command))
@@ -56,70 +55,100 @@ public class CommandHandler
 
     public void HandleMove(params string[] args)
     {
-        if (args.Length != 1)
-            throw new ArgumentException("Move should accept exactly one argument: [Direction]");
+        if (args.Length > 1)
+        {
+            Console.Error("Move should accept exactly one argument: [bold]Direction[/]");
+            return;
+        }
+        string directionStr = "";
+        if (args.Length == 0)
+            directionStr = Console.SelectionPrompt("to which direction?", ["LEFT", "RIGHT", "UP", "DOWN"]);
+        else
+            directionStr = args[0];
+
         var directions = Enum.GetValues<Direction>().ToList();
 
-        if (directions.Any(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)))
-            _game.Move(directions.Find(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)));
+        if (directions.Any(d => string.Equals(d.ToString(), directionStr, StringComparison.OrdinalIgnoreCase)))
+            _game.Move(directions.Find(d => string.Equals(d.ToString(), directionStr, StringComparison.OrdinalIgnoreCase)));
         else
         {
-            Console.Error($"[bold]{args[0]}[/] is not a valid direction.");
+            Console.Error($"[bold]{directionStr}[/] is not a valid direction.");
         }
     }
 
     public void HandlePick(params string[] args)
     {
-        foreach (string arg in args)
+        List<Skill> availableSkills = _game.GetCellSkills();
+        string[] chosen = [];
+
+        if (args.Length > 0)
+            chosen = args;
+        else
         {
-            if (!Skill.Get(arg, out Skill? skill))
-            {
-                // User Error: {arg} is not an skill
-                Console.Error($"Error: {arg} is not an skill");
-                continue;
-            }
-            _game.Pick(skill.ID);
+            Console.NormalText($"Current Cell Skills:\n{string.Join('\n', availableSkills)}");
+            chosen = Console.MultiSelectionPrompt(
+                "which skills to pick?",
+                availableSkills.Select(skill => skill.Name).ToArray()
+            ).ToArray();
+        }
+
+        foreach (string skillName in chosen)
+        {
+            var skill = availableSkills.Find(skill => string.Equals(skillName, skill.Name, StringComparison.OrdinalIgnoreCase));
+            if (skill != null)
+                _game.Pick(skill.ID);
+            else if (Skill.Get(skillName, out Skill? skill2))
+                Console.Warning($"Skill {skillName} is not available in current brain cell!");
+            else
+                Console.Error($"{skillName} is not a valid skill name!");
         }
     }
 
     public void HandleDrop(params string[] args)
     {
-        foreach (string arg in args)
+        List<Skill> availableSkills = _game.GetBagSkills();
+        Console.NormalText($"Bag Skills:\n{string.Join('\n', availableSkills)}");
+        // return;
+        string[] chosen = [];
+
+        if (args.Length > 0)
+            chosen = args;
+        else
         {
-            if (!Skill.Get(arg, out Skill? skill))
-            {
-                // User Error: {arg} is not an skill
-                Console.Error($"Error: {arg} is not an skill");
-                continue;
-            }
-            _game.Drop(skill.ID);
+            chosen = Console.MultiSelectionPrompt(
+                "which skills to drop?",
+                availableSkills.Select(skill => skill.Name).ToArray()
+            ).ToArray();
+        }
+
+        foreach (string skillName in chosen)
+        {
+            var skill = availableSkills.Find(skill => string.Equals(skillName, skill.Name, StringComparison.OrdinalIgnoreCase));
+            if (skill != null)
+                _game.Drop(skill.ID);
+            else if (Skill.Get(skillName, out Skill? skill2))
+                Console.Warning($"Skill {skillName} is not available in current brain cell!");
+            else
+                Console.Error($"{skillName} is not a valid skill name!");
         }
     }
 
-    public void HandleAttack(params string[] args)
-    {
-    }
 
-    public void HandleInventory(params string[] args)
+    public void HandleShow(params string[] args)
     {
         if (args.Length > 0)
         {
-            // User Warning: Inventory Command doesn't require any arguments
+            // User Warning: Skills Bag Command doesn't require any arguments
             Console.Warning($"Warning: Inventory command doesn't require any arguments");
             return;
         }
-        _game.ShowInventory();
+        _game.ShowBagSkills();
     }
 
-    public void HandleLook(params string[] args)
+
+    public void HandleRestart(params string[] args)
     {
-        if (args.Length > 0)
-        {
-            // User Warning: Look Command doesn't require any arguments
-            Console.Warning($"Warning: Look command doesn't require any arguments");
-            return;
-        }
-        _game.ShowCellDetails();
+        _game.Restart();
     }
 
     public void HandleExit(params string[] args)

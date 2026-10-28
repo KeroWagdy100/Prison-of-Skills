@@ -1,4 +1,6 @@
 {
+    "IntroPath": "Introduction.txt",
+    "CommandsPath": "Commands.txt",
     "Rows": 3,
     "Cols": 4,
 
@@ -136,13 +138,18 @@
         },
         {
             "Obstacle": "AI",
-            "Cost": 24,
+            "TimeCost": 24,
             "DefeatedBy": "Database"
         },
         {
             "Obstacle": "Laziness",
-            "Cost": 12,
+            "TimeCost": 12,
             "DefeatedBy": "Language"
+        },
+        {
+            "Obstacle": "Boredom",
+            "TimeCost": 7,
+            "DefeatedBy": "DSA"
         }
     ],
 

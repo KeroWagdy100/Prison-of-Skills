@@ -7,7 +7,7 @@ public class Game
 
     private Cell[,] Cells { get; set; } = new Cell[1, 1];
     private Movement Movement { get; set; } = new(1, 1);
-    private Inventory MyBag { get; set; } = new();
+    private Bag MyBag { get; set; } = new();
 
     public Cell CurrentCell => Cells[Movement.Pos.x, Movement.Pos.y];
 
@@ -28,9 +28,11 @@ public class Game
         Movement = movement;
     }
 
-    public void Run()
+    public async Task Run()
     {
         IsRunning = true;
+        System.Console.Clear();
+        await ShowIntro();
 
         while (IsRunning)
         {
@@ -45,6 +47,12 @@ public class Game
         }
     }
 
+    public async Task ShowIntro()
+        => await Console.SlowPrint(Console.GetStaticText("intro"));
+
+    public async Task ShowCommands()
+        => await Console.SlowPrint(Console.GetStaticText("commands"));
+
     public void Move(Direction direction)
     {
         if (!Movement.MoveTo(direction))
@@ -53,7 +61,7 @@ public class Game
             Console.Error($"Cannot move [bold]{direction}[/]");
             return;
         }
-        Console.Confirm($"Moved to {Movement.Pos}");
+        Console.Confirm($"Moved {direction} to {Movement.Pos}");
     }
 
     public void Pick(Guid skillId)
@@ -90,10 +98,10 @@ public class Game
         Console.Confirm($"Dropped {skill.Name}.");
     }
 
-    public void ShowInventory()
+    public void ShowBagSkills()
     {
-        Console.NormalText("Current Inventory Skills: ");
-        MyBag.ShowSkills();
+        var list = MyBag.GetSkills();
+        Console.NormalText($"Current Bag Skills: {string.Join('\n', list)}");
     }
 
     public void ShowCellDetails()
@@ -102,6 +110,16 @@ public class Game
         CurrentCell.ShowInfo();
     }
 
+    public List<Skill> GetBagSkills()
+        => MyBag.GetSkills();
+
+    public List<Skill> GetCellSkills()
+        => CurrentCell.GetSkills();
+
+    public void Restart()
+    {
+
+    }
 
     public void Exit()
         => IsRunning = false;

@@ -1,0 +1,40 @@
+Welcome to [bold yellow]Prison Of Skills[/] Game.
+You're a 1st year computer science student in the greatest university of all time (Assiut Uni).
+You entered this college dreaming that you become the next Bill Gates in your Generation.
+"Such a great field that has great career opportunities in the future" every content creator said.
+Even a great ancient president once said "Wages in this career reach $100k/month merta7a".
+
+To be honest.. all these sayings were true in some sense. 
+But unfortunately, a mentally disturbed American entrepreneur went out
+one day and published an unbalanced cursed technology called LLMs.
+This technology invaded the whole world with its stupid power and called itself AI.
+Career has been going crazy because companies tend to replace developers with AI. 
+
+Since then, your dreams became dark. You started doubting your ability to even
+get a single opportunity of an internship program.
+
+Today you woke up excited, drank your cup of coffee and started thinking about your future
+and the most efficient way to reach your first internship interview.
+Your goal is to reach your first interview as a Backend intern.  
+You found that in order to reach your goal, you need strength points.
+Strength points are earned through gaining skills.
+
+There're 6 types of skills:
+1. Language (programming language)
+2. DSA (data structures & algorithms)
+3. Generic (ex: Soft Skills)
+4. Database
+5. Technology (A backend framework)
+6. Extra Skills
+
+Skills are not easily gained, you have to study and practice for some months (sometimes years) to gain a single skill.
+
+You're trapped inside your brain cells (a map of 3 rows and 4 columns) and you start at row 1, col 1 with your bag of skills empty.
+A brain cell can contain skills that you can gain,
+obstacles, that wastes a lot of time, or both.
+An obstacle can be passed without wasting time if some skill type that can defeat it is in your bag. 
+
+Your goal is to reach cell at row 3 and col 4 to start your interview.
+Your strength points determines whether you pass or fail the interview :)
+
+GOOD LUCK !

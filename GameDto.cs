@@ -2,6 +2,9 @@ namespace zelda_game;
 
 public record GameDto
 {
+    public string IntroPath { get; set; } = "";
+    public string CommandsPath { get; set; } = "";
+
     public int Rows { get; set; }
     public int Cols { get; set; }
 

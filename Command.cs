@@ -3,10 +3,9 @@ namespace zelda_game;
 public enum Command
 {
     MOVE,
+    SHOW,
     PICK,
     DROP,
-    ATTACK,
-    INVENTORY,
-    LOOK,
+    RESTART,
     EXIT
 }

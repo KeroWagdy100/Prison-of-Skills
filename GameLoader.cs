@@ -27,6 +27,9 @@ public class GameLoader
         LoadSkills(gameDto);
         LoadObstacles(gameDto);
         LoadCells(gameDto, out cells);
+
+        LoadIntroText(gameDto.IntroPath);
+        LoadCommandsText(gameDto.CommandsPath);
     }
 
     private static void LoadSkills(GameDto gameDto)
@@ -44,7 +47,7 @@ public class GameLoader
             if (Skill.Get(id, out Skill? skill))
             {
                 Logger.Success(
-                    $"Loaded SKill {skill.Name}, Type: {skill.Type}m",
+                    $"Loaded SKill {skill.Name}, Type: {skill.Type}",
                     $"Time Cost: {skill.TimeCost}m, Strength: {skill.Strength}\n"
                 );
             }
@@ -123,4 +126,19 @@ public class GameLoader
         Logger.Log($"---- ------ ----");
     }
 
+
+    private static void LoadIntroText(string introPath)
+    {
+        if (!File.Exists(introPath))
+            throw new FileNotFoundException($"Intro Path {introPath} does not exist. Please ensure the file exists.");
+        Console.AddStaticText("intro", File.ReadAllText(introPath));
+    }
+
+    private static void LoadCommandsText(string commandsPath)
+    {
+        if (!File.Exists(commandsPath))
+            throw new FileNotFoundException($"Commands Path {commandsPath} does not exist. Please ensure the file exists.");
+
+        Console.AddStaticText("commands", File.ReadAllText(commandsPath));
+    }
 }
