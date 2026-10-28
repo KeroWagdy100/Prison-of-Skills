@@ -39,7 +39,7 @@ public class CommandHandler
 
     public void Handle(string line)
     {
-        var words = line.Split();
+        var words = line.Trim().Split();
         string commandString = words[0].ToUpper();
 
         if (!AllCommmands.TryGetValue(commandString, out Command command))
@@ -55,26 +55,26 @@ public class CommandHandler
     public void HandleMove(params string[] args)
     {
         if (args.Length != 1)
-            throw new ArgumentException("Move should accept one argument only: [Direction]"); 
+            throw new ArgumentException("Move should accept one argument only: [Direction]");
         var directions = Enum.GetValues<Direction>().ToList();
 
         if (directions.Any(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)))
             _game.Move(directions.Find(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)));
         else
-            throw new ArgumentException($"[{args[0]}] is not a direction."); 
+            throw new ArgumentException($"[{args[0]}] is not a direction.");
     }
 
     public void HandlePick(params string[] args)
     {
         foreach (string arg in args)
         {
-            if (!Item.Get(arg, out Item? item))
+            if (!Skill.Get(arg, out Skill? skill))
             {
-                // User Error: {arg} is not an item
-                Console.WriteLine($"Error: {arg} is not an item");
+                // User Error: {arg} is not an skill
+                Console.WriteLine($"Error: {arg} is not an skill");
                 continue;
             }
-            _game.Pick(item.ID);
+            _game.Pick(skill.ID);
         }
     }
 
@@ -82,13 +82,13 @@ public class CommandHandler
     {
         foreach (string arg in args)
         {
-            if (!Item.Get(arg, out Item? item))
+            if (!Skill.Get(arg, out Skill? skill))
             {
-                // User Error: {arg} is not an item
-                Console.WriteLine($"Error: {arg} is not an item");
+                // User Error: {arg} is not an skill
+                Console.WriteLine($"Error: {arg} is not an skill");
                 continue;
             }
-            _game.Drop(item.ID);
+            _game.Drop(skill.ID);
         }
     }
 
@@ -115,7 +115,7 @@ public class CommandHandler
             Console.WriteLine($"Warning: Look command doesn't require any arguments");
             return;
         }
-        _game.ShowRoomDetails();
+        _game.ShowCellDetails();
     }
 
     public void HandleExit(params string[] args)

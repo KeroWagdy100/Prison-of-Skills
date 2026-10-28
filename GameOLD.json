@@ -1,0 +1,231 @@
+{
+    "Width": 4,
+    "Height": 3,
+    "Items": [
+        {
+            "ItemName": "Knife",
+            "ItemType": "Weapon",
+            "Price": 0
+        },
+        {
+            "ItemName": "Assault Rifle",
+            "ItemType": "Weapon",
+            "Price": 10
+        },
+        {
+            "ItemName": "Cookies",
+            "ItemType": "Weapon",
+            "Price": 0
+        },
+        {
+            "ItemName": "Flare Gun",
+            "ItemType": "Weapon",
+            "Price": 30
+        },
+        {
+            "ItemName": "Rockey",
+            "ItemType": "Weapon",
+            "Price": 0
+        },
+        {
+            "ItemName": "Password",
+            "ItemType": "Weapon",
+            "Price": 80
+        },
+        {
+            "ItemName": "linux",
+            "ItemType": "Weapon",
+            "Price": 40
+        },
+        {
+            "ItemName": "Key A",
+            "ItemType": "Key",
+            "Price": 0
+        },
+        {
+            "ItemName": "Key B",
+            "ItemType": "Key",
+            "Price": 0
+        },
+        {
+            "ItemName": "Key C",
+            "ItemType": "Key",
+            "Price": 0
+        },
+        {
+            "ItemName": "Key D",
+            "ItemType": "Key",
+            "Price": 0
+        },
+        {
+            "ItemName": "Key E",
+            "ItemType": "Key",
+            "Price": 0
+        }
+    ],
+    "Monsters": [
+        {
+            "MonsterName": "Goblin",
+            "RequiredWeapons": ["Kinfe"],
+            "RewardItem": "Key A",
+            "RewardCoins": 5
+        },
+        {
+            "MonsterName": "Hulk",
+            "RequiredWeapons": ["Assault Rifle", "Rockey"],
+            "RewardItem": "Key C",
+            "RewardCoins": 10
+        },
+        {
+            "MonsterName": "Rockey",
+            "RequiredWeapons": ["Dog Leash"],
+            "RewardItem": "Rockey",
+            "RewardCoins": 0
+        },
+        {
+            "MonsterName": "Virus",
+            "RequiredWeapons": ["Antivirus"],
+            "RewardItem": "Cookies",
+            "RewardCoins": 0
+        },
+        {
+            "MonsterName": "Hacker",
+            "RequiredWeapons": ["linux"],
+            "RewardItem": "Key E",
+            "RewardCoins": 0
+        }
+    ],
+    "Rooms": [
+        {
+            "PosX": 0,
+            "PosY": 0,
+            "Description": "",
+            "Items": [ "Knife" ],
+            "RequiredKey": null,
+            "Coins": 2,
+            "Monster": null,
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 0,
+            "PosY": 1,
+            "Description": "",
+            "Items": null,
+            "RequiredKey": null,
+            "Coins": null,
+            "Monster": "Goblin",
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 0,
+            "PosY": 2,
+            "Description": "",
+            "Items": null,
+            "RequiredKey": null,
+            "Coins": null,
+            "Monster": "Hulk",
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 0,
+            "PosY": 3,
+            "Description": "",
+            "Items": ["Flare Gun"],
+            "RequiredKey": null,
+            "Coins": null,
+            "Monster": null,
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 1,
+            "PosY": 0,
+            "Description": "",
+            "Items": [],
+            "RequiredKey": "Key A",
+            "Coins": null,
+            "Monster": "Rockey",
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 1,
+            "PosY": 1,
+            "Description": "",
+            "Items": ["Key B"],
+            "RequiredKey": null,
+            "Coins": 8,
+            "Monster": "Rockey",
+            "HasWitch": true
+        },
+
+        {
+            "PosX": 1,
+            "PosY": 2,
+            "Description": "",
+            "Items": ["Assault Rifle"],
+            "RequiredKey": "Key B",
+            "Coins": null,
+            "Monster": null,
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 1,
+            "PosY": 3,
+            "Description": "",
+            "Items": ["Key D"],
+            "RequiredKey": null,
+            "Coins": 15,
+            "Monster": null,
+            "HasWitch": true
+        },
+
+        {
+            "PosX": 2,
+            "PosY": 0,
+            "Description": "",
+            "Items": [],
+            "RequiredKey": null,
+            "Coins": null,
+            "Monster": "Virus",
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 2,
+            "PosY": 1,
+            "Description": "",
+            "Items": ["Password", "linux"],
+            "RequiredKey": "Key D",
+            "Coins": null,
+            "Monster": null,
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 2,
+            "PosY": 2,
+            "Description": "",
+            "Items": [],
+            "RequiredKey": null,
+            "Coins": null,
+            "Monster": "Hacker",
+            "HasWitch": false
+        },
+
+        {
+            "PosX": 2,
+            "PosY": 3,
+            "Description": "",
+            "Items": [],
+            "RequiredKey": "Key E",
+            "Coins": null,
+            "Monster": null,
+            "HasWitch": false
+        }
+    ]
+}

@@ -24,8 +24,8 @@ public struct Position
 
 public class Movement(int BoundWidth, int BoundHeight, Position initalPosition = default)
 {
-    private readonly static int[] dx = [-1, 1, 0, 0];
-    private readonly static int[] dy = [0, 0, -1, 1];
+    private readonly static int[] dx = [0, 0, -1, 1];
+    private readonly static int[] dy = [-1, 1, 0, 0];
 
     public Position Pos { get; private set; } = initalPosition;
     public int Width { get; set; } = BoundWidth;

@@ -1,46 +1,47 @@
 using System.Diagnostics.CodeAnalysis;
 namespace zelda_game;
 
-public record Monster
+public class Obstacle
 {
     public Guid ID {get;} = Guid.NewGuid();
     public string Name { get; private set; } = "";
-    public List<Guid> DefeatedBy { get; private set; } = [];
-    public Guid? RewardItem { get; private set; }
-    public int RewardCoins { get; private set; } = 0;
+    public SkillType DefeatedBy { get; private set; }
+    public int TimeCost { get; private set; }
 
 
-    private static readonly Dictionary<Guid, Monster> allMonsters = [];
+    private static readonly Dictionary<Guid, Obstacle> allObstacles = [];
 
-    public static Guid CreateMonster(
-        string monsterName,
-        List<Guid> defeatedByWeaponsIds,
-        Guid? rewardItem,
-        int rewardCoins = 0
+    public static Guid Create(
+        string obstacleName,
+        SkillType defeatedBySkillType,
+        int timeCost
         )
     {
-        Monster monster = new() {
-            Name = monsterName,
-            DefeatedBy = defeatedByWeaponsIds,
-            RewardItem = rewardItem,
-            RewardCoins = rewardCoins};
+        Obstacle obstacle = new() {
+            Name = obstacleName,
+            DefeatedBy = defeatedBySkillType,
+            TimeCost = timeCost};
         
-        allMonsters.Add(monster.ID, monster);
-        return monster.ID;
+        allObstacles.Add(obstacle.ID, obstacle);
+        return obstacle.ID;
     }
 
-    public static bool Get(Guid monsterId, [MaybeNullWhen(false)] out Monster monster)
+    public static bool Get(Guid obstacleId, [MaybeNullWhen(false)] out Obstacle obstacle)
     {
-        if (!allMonsters.TryGetValue(monsterId, out monster))
+        if (!allObstacles.TryGetValue(obstacleId, out obstacle))
             return false;
-        return monster is not null;
+        return obstacle is not null;
     }
-    public static bool Get(string monsterName, [MaybeNullWhen(false)] out Monster monster)
+    public static bool Get(string obstacleName, [MaybeNullWhen(false)] out Obstacle obstacle)
     {
-        monster = null;
-        if (!allMonsters.Any(pair => pair.Value.Name == monsterName))
+        obstacle = null;
+        if (!allObstacles.Any(pair => string.Equals(pair.Value.Name, obstacleName, StringComparison.OrdinalIgnoreCase)))
             return false;
-        monster = allMonsters.First(pair => pair.Value.Name == monsterName).Value;
-        return monster is not null;
+
+        obstacle = allObstacles.First(pair =>
+            string.Equals(pair.Value.Name, obstacleName, StringComparison.OrdinalIgnoreCase)
+        ).Value;
+
+        return obstacle is not null;
     }
 }

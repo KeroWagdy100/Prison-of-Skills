@@ -1,231 +1,236 @@
 {
-    "Width": 4,
-    "Height": 3,
-    "Items": [
+    "Rows": 3,
+    "Cols": 4,
+
+    "Skills":
+    [
+            {
+                "Skill": "C/C++",
+                "Cost": 6,
+                "Strength": 100,
+                "Type": "Language",
+                "Description": "C is a procedural programming language developed by Dennis Ritchie in 1972, while C++ is a multi-paradigm extension created by Bjarne Stroustrup in 1979 (released 1985) that adds object-oriented, generic, and functional features to C's foundation."
+                
+            },
+            {
+                "Skill": "Python",
+                "Cost": 1,
+                "Strength": 50,
+                "Type": "Language"
+            },
+            {
+                "Skill": "C#",
+                "Cost": 4,
+                "Strength": 80,
+                "Type": "Language"
+            },
+
+            {
+                "Skill": "DSA College Course",
+                "Cost": 3,
+                "Strength": 60,
+                "Type": "DSA"
+            },
+            {
+                "Skill": "ECPC",
+                "Cost": 12,
+                "Strength": 150,
+                "Type": "DSA"
+            },
+
+            {
+                "Skill": "PostgreSQL",
+                "Cost": 4,
+                "Strength": 100,
+                "Type": "Database"
+            },
+            {
+                "Skill": "SQLServer",
+                "Cost": 6,
+                "Strength": 60,
+                "Type": "Database"
+            },
+            {
+                "Skill": "MySQL",
+                "Cost": 3,
+                "Strength": 40,
+                "Type": "Database"
+            },
+            {
+                "Skill": "SQLite",
+                "Cost": 2,
+                "Strength": 30,
+                "Type": "Database"
+            },
+
+            {
+                "Skill": "Soft Skills",
+                "Cost": 1,
+                "Strength": 80,
+                "Type": "Generic"
+            },
+            {
+                "Skill": "OOP",
+                "Cost": 5,
+                "Strength": 150,
+                "Type": "Generic"
+            },
+
+            {
+                "Skill": "NodeJS",
+                "Cost": 8,
+                "Strength": 150,
+                "Type": "Technology"
+            },
+            {
+                "Skill": "NodeJS",
+                "Cost": 8,
+                "Strength": 150,
+                "Type": "Technology"
+            },
+            {
+                "Skill": "ASP.NET Core",
+                "Cost": 12,
+                "Strength": 200,
+                "Type": "Technology"
+            },
+            {
+                "Skill": "Django",
+                "Cost": 7,
+                "Strength": 130,
+                "Type": "Technology"
+            },
+
+            {
+                "Skill": "System Design",
+                "Cost": 4,
+                "Strength": 180,
+                "Type": "Extra"
+            },
+            {
+                "Skill": "Linux",
+                "Cost": 4,
+                "Strength": 200,
+                "Type": "Extra"
+            },
+            {
+                "Skill": "GPA",
+                "Cost": 7,
+                "Strength": 80,
+                "Type": "Extra"
+            },
+            {
+                "Skill": "Git/Github",
+                "Cost": 2,
+                "Strength": 120,
+                "Type": "Extra"
+            }
+    ],
+    
+    "Obstacles":
+    [
         {
-            "ItemName": "Knife",
-            "ItemType": "Weapon",
-            "Price": 0
+            "Obstacle": "Brainrot",
+            "TimeCost": 18,
+            "DefeatedBy": "Technology"
         },
         {
-            "ItemName": "Assault Rifle",
-            "ItemType": "Weapon",
-            "Price": 10
+            "Obstacle": "AI",
+            "Cost": 24,
+            "DefeatedBy": "Database"
         },
         {
-            "ItemName": "Cookies",
-            "ItemType": "Weapon",
-            "Price": 0
-        },
-        {
-            "ItemName": "Flare Gun",
-            "ItemType": "Weapon",
-            "Price": 30
-        },
-        {
-            "ItemName": "Rockey",
-            "ItemType": "Weapon",
-            "Price": 0
-        },
-        {
-            "ItemName": "Password",
-            "ItemType": "Weapon",
-            "Price": 80
-        },
-        {
-            "ItemName": "linux",
-            "ItemType": "Weapon",
-            "Price": 40
-        },
-        {
-            "ItemName": "Key A",
-            "ItemType": "Key",
-            "Price": 0
-        },
-        {
-            "ItemName": "Key B",
-            "ItemType": "Key",
-            "Price": 0
-        },
-        {
-            "ItemName": "Key C",
-            "ItemType": "Key",
-            "Price": 0
-        },
-        {
-            "ItemName": "Key D",
-            "ItemType": "Key",
-            "Price": 0
-        },
-        {
-            "ItemName": "Key E",
-            "ItemType": "Key",
-            "Price": 0
+            "Obstacle": "Laziness",
+            "Cost": 12,
+            "DefeatedBy": "Language"
         }
     ],
-    "Monsters": [
-        {
-            "MonsterName": "Goblin",
-            "RequiredWeapons": ["Kinfe"],
-            "RewardItem": "Key A",
-            "RewardCoins": 5
-        },
-        {
-            "MonsterName": "Hulk",
-            "RequiredWeapons": ["Assault Rifle", "Rockey"],
-            "RewardItem": "Key C",
-            "RewardCoins": 10
-        },
-        {
-            "MonsterName": "Rockey",
-            "RequiredWeapons": ["Dog Leash"],
-            "RewardItem": "Rockey",
-            "RewardCoins": 0
-        },
-        {
-            "MonsterName": "Virus",
-            "RequiredWeapons": ["Antivirus"],
-            "RewardItem": "Cookies",
-            "RewardCoins": 0
-        },
-        {
-            "MonsterName": "Hacker",
-            "RequiredWeapons": ["linux"],
-            "RewardItem": "Key E",
-            "RewardCoins": 0
-        }
-    ],
-    "Rooms": [
-        {
-            "PosX": 0,
-            "PosY": 0,
-            "Description": "",
-            "Items": [ "Knife" ],
-            "RequiredKey": null,
-            "Coins": 2,
-            "Monster": null,
-            "HasWitch": false
-        },
 
+    "Cells":
+    [
         {
-            "PosX": 0,
-            "PosY": 1,
-            "Description": "",
-            "Items": null,
-            "RequiredKey": null,
-            "Coins": null,
-            "Monster": "Goblin",
-            "HasWitch": false
+            "X": 0,
+            "Y": 0,
+            "Skills": ["C/C++", "SQLite"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 0,
-            "PosY": 2,
-            "Description": "",
-            "Items": null,
-            "RequiredKey": null,
-            "Coins": null,
-            "Monster": "Hulk",
-            "HasWitch": false
+            "X": 0,
+            "Y": 1,
+            "Skills": ["OOP", "MySQL"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 0,
-            "PosY": 3,
-            "Description": "",
-            "Items": ["Flare Gun"],
-            "RequiredKey": null,
-            "Coins": null,
-            "Monster": null,
-            "HasWitch": false
+            "X": 0,
+            "Y": 2,
+            "Skills": ["System Design"],
+            "Obstacles": ["AI"],
+            "Description": ""
         },
-
         {
-            "PosX": 1,
-            "PosY": 0,
-            "Description": "",
-            "Items": [],
-            "RequiredKey": "Key A",
-            "Coins": null,
-            "Monster": "Rockey",
-            "HasWitch": false
+            "X": 0,
+            "Y": 3,
+            "Skills": ["DSA College Course", "SQLServer"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 1,
-            "PosY": 1,
-            "Description": "",
-            "Items": ["Key B"],
-            "RequiredKey": null,
-            "Coins": 8,
-            "Monster": "Rockey",
-            "HasWitch": true
+            "X": 1,
+            "Y": 0,
+            "Skills": ["GPA"],
+            "Obstacles": ["Brainrot"],
+            "Description": ""
         },
-
         {
-            "PosX": 1,
-            "PosY": 2,
-            "Description": "",
-            "Items": ["Assault Rifle"],
-            "RequiredKey": "Key B",
-            "Coins": null,
-            "Monster": null,
-            "HasWitch": false
+            "X": 1,
+            "Y": 1,
+            "Skills": ["Python", "Django"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 1,
-            "PosY": 3,
-            "Description": "",
-            "Items": ["Key D"],
-            "RequiredKey": null,
-            "Coins": 15,
-            "Monster": null,
-            "HasWitch": true
+            "X": 1,
+            "Y": 2,
+            "Skills": ["Linux"],
+            "Obstacles": ["Laziness"],
+            "Description": ""
         },
-
         {
-            "PosX": 2,
-            "PosY": 0,
-            "Description": "",
-            "Items": [],
-            "RequiredKey": null,
-            "Coins": null,
-            "Monster": "Virus",
-            "HasWitch": false
+            "X": 1,
+            "Y": 3,
+            "Skills": ["C#", "ASP.NET Core"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 2,
-            "PosY": 1,
-            "Description": "",
-            "Items": ["Password", "linux"],
-            "RequiredKey": "Key D",
-            "Coins": null,
-            "Monster": null,
-            "HasWitch": false
+            "X": 2,
+            "Y": 0,
+            "Skills": ["ECPC", "NodeJS"],
+            "Obstacles": null,
+            "Description": ""
         },
-
         {
-            "PosX": 2,
-            "PosY": 2,
-            "Description": "",
-            "Items": [],
-            "RequiredKey": null,
-            "Coins": null,
-            "Monster": "Hacker",
-            "HasWitch": false
+            "X": 2,
+            "Y": 1,
+            "Skills": ["Git/Github"],
+            "Obstacles": ["Boredom"],
+            "Description": ""
         },
-
         {
-            "PosX": 2,
-            "PosY": 3,
-            "Description": "",
-            "Items": [],
-            "RequiredKey": "Key E",
-            "Coins": null,
-            "Monster": null,
-            "HasWitch": false
+            "X": 2,
+            "Y": 2,
+            "Skills": ["PostgreSQL", "Soft Skills"],
+            "Obstacles": null,
+            "Description": ""
+        },
+        {
+            "X": 2,
+            "Y": 3,
+            "Skills": null,
+            "Obstacles": null,
+            "Description": ""
         }
     ]
 }

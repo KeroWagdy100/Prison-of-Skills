@@ -2,37 +2,36 @@ namespace zelda_game;
 
 public record GameDto
 {
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public int Rows { get; set; }
+    public int Cols { get; set; }
 
-    public List<ItemDto> Items { get; set; } = [];
-    public List<MonsterDto> Monsters { get; set; } = [];
-    public List<RoomDto> Rooms { get; set; } = [];
+    public List<SkillDto> Skills { get; set; } = [];
+    public List<ObstacleDto> Obstacles { get; set; } = [];
+    public List<CellDto> Cells { get; set; } = [];
 }
 
-public record ItemDto
+public record SkillDto
 {
-    public string ItemName { get; set; } = "";
-    public string ItemType { get; set; } = "";
-    public int Price { get; set; }
+    public string Skill { get; set; } = "";
+    public int Cost { get; set; }
+    public int Strength { get; set; }
+    public string Type { get; set; } = "";
+    public string Description { get; set; } = "";
 }
 
-public record MonsterDto
+public record ObstacleDto
 {
-    public string MonsterName { get; set; } = "";
-    public List<string> RequiredWeapons { get; set; } = [];
-    public string? RewardItem { get; set; } = "";
+    public string Obstacle { get; set; } = "";
+    public int TimeCost { get; set; }
+    public string DefeatedBy { get; set; } = "";
     public int? RewardCoins { get; set; } = 0;
 }
 
-public class RoomDto
+public class CellDto
 {
-    public int PosX { get; set; }
-    public int PosY { get; set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public List<string>? Skills { get; set; }
+    public List<string>? Obstacles { get; set; }
     public string Description { get; set; } = "";
-    public List<string>? Items { get; set; } = [];
-    public string? RequiredKey { get; set; } = "";
-    public int? Coins { get; set; } = 0;
-    public string? Monster { get; set; } = "";
-    public bool HasWitch { get; set; } = false;
 }

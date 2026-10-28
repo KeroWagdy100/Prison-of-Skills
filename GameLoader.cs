@@ -1,9 +1,10 @@
+using System.Diagnostics;
 using System.Text.Json;
 namespace zelda_game;
 
 public class GameLoader
 {
-    public static void LoadGame(string filename, out Room[,] rooms, out Movement movement)
+    public static void LoadGame(string filename, out Cell[,] cells, out Movement movement)
     {        
         if (!File.Exists(filename))
             throw new ArgumentException($"{filename} does not exist. Please ensure the file exists.");
@@ -21,95 +22,99 @@ public class GameLoader
             Logger.Log(ex);
         }
 
-        movement = new(gameDto.Width, gameDto.Height);
+        movement = new(gameDto.Rows, gameDto.Cols);
 
-        LoadItems(gameDto);
-        LoadMonsters(gameDto);
-        LoadRooms(gameDto, out rooms);
+        LoadSkills(gameDto);
+        LoadObstacles(gameDto);
+        LoadCells(gameDto, out cells);
     }
 
-    private static void LoadItems(GameDto gameDto)
+    private static void LoadSkills(GameDto gameDto)
     {
-        Logger.Log($"---- Loading Items ----");
-        foreach (ItemDto itemDto in gameDto.Items)
+        Logger.Log($"---- Loading Skills ----");
+        foreach (SkillDto dto in gameDto.Skills)
         {
-            switch (itemDto.ItemType)
-            {
-                case "Weapon": 
-                    Weapon.CreateWeapon(itemDto.ItemName, itemDto.Price);
-                    Logger.Log($"Loaded Weapon {itemDto.ItemName}");
-                break;
-                case "Key":
-                    Key.CreateKey(itemDto.ItemName);
-                    Logger.Log($"Loaded Key {itemDto.ItemName}");
-                break;
-            }
-        }
-        Logger.Log($"---- ------ ----");
-    }
-
-    private static void LoadMonsters(GameDto gameDto)
-    {
-        Logger.Log($"---- Loading Monsters ----");
-        foreach (MonsterDto dto in gameDto.Monsters)
-        {
-            List<Guid> requiredWeapons = [];
-            foreach (string weaponName in dto.RequiredWeapons)
-                if (Weapon.Get(weaponName, out Weapon? weapon))
-                    requiredWeapons.Add(weapon.ID);
-
-            Item? rewardItem = null;
-            if (dto.RewardItem != null)
-                Item.Get(dto.RewardItem ?? "", out rewardItem);
-
-            Monster.CreateMonster(
-                dto.MonsterName,
-                requiredWeapons,
-                rewardItem?.ID,
-                dto.RewardCoins ?? 0
+            var id = Skill.CreateSkill (
+                dto.Skill,
+                Enum.Parse<SkillType>(dto.Type.ToUpper()), // TODO: Use TryParse to handle unexpected exceptions
+                dto.Cost,
+                dto.Strength
             );
 
-            Logger.Log($"Loaded Monster {dto.MonsterName}, Reward item: {rewardItem?.ID}, Reward Coins: {dto.RewardCoins}");
-            Logger.Log($"Needed Weapons: {string.Join('-', requiredWeapons)}\n");
+            if (Skill.Get(id, out Skill? skill))
+            {
+                Logger.Log($"Loaded SKill {skill.Name}, Type: {skill.Type}m");
+                Logger.Log($"Time Cost: {skill.TimeCost}m, Strength: {skill.Strength}\n");
+            }
+            else
+            {
+                Logger.Log($"Could not load skill with name: {dto.Skill}");
+            }
         }
         Logger.Log($"---- ------ ----");
     }
 
-    private static void LoadRooms(GameDto gameDto, out Room[,] rooms)
+    private static void LoadObstacles(GameDto gameDto)
     {
-        Logger.Log($"---- Loading Rooms ----");
-        rooms = new Room[gameDto.Height, gameDto.Width];
-
-        foreach (RoomDto roomDto in gameDto.Rooms)
+        Logger.Log($"---- Loading Obstacles ----");
+        foreach (ObstacleDto dto in gameDto.Obstacles)
         {
-            Logger.Log($"Loading Room at {roomDto.PosX}, {roomDto.PosY}");
 
-            Room room = rooms[roomDto.PosX, roomDto.PosY] = new Room();
-            room.Coins = roomDto.Coins ?? 0;
-            room.Description = roomDto.Description;
-            room.HasWitch = roomDto.HasWitch;
-            
-            if (roomDto.RequiredKey != null && Key.Get(roomDto.RequiredKey, out Key? key))
-                room.RequiredKey = key.ID;
+            var id = Obstacle.Create(
+                dto.Obstacle,
+                Enum.Parse<SkillType>(dto.DefeatedBy.ToUpper()),
+                dto.TimeCost
+            );
 
-            if (roomDto.Monster != null && Monster.Get(roomDto.Monster, out Monster? monster))
-                room.Monster = monster.ID;
-
-            // Adding room items
-            foreach (string itemName in roomDto.Items ?? [])
+            if (Obstacle.Get(id, out Obstacle? obs))
             {
-                if (Item.Get(itemName, out Item? item))
-                {
-                    room.Add(item.ID);
-                    Logger.Log($"Added Item: {item.Name}");
-                }
+                Logger.Log($"Loaded Obstacle {obs.Name}, Time Cost: {obs.TimeCost}m");
+                Logger.Log($"Defeated by: {obs.DefeatedBy}\n");
             }
-            
-            Logger.Log($"Coins: {room.Coins}");
+            else
+            {
+                Logger.Log($"Could not load obstacle with name: {dto.Obstacle}");
+            }
+        }
+        Logger.Log($"---- ------ ----");
+    }
+
+    private static void LoadCells(GameDto gameDto, out Cell[,] cells)
+    {
+        Logger.Log($"---- Loading Cells ----");
+        cells = new Cell[gameDto.Rows, gameDto.Cols];
+
+        foreach (CellDto dto in gameDto.Cells)
+        {
+            Logger.Log($"Loading Cell at {dto.X}, {dto.Y}");
+
+            Cell room = cells[dto.X, dto.Y] = new Cell();
+            room.Description = dto.Description;
             Logger.Log($"Desc: {room.Description}");
-            Logger.Log($"HasWitch: {room.HasWitch}");
-            Logger.Log($"RequiredKey: {room.RequiredKey}");
-            Logger.Log($"Monster: {room.Monster}\n");
+
+            List<Guid> obstaclesIds = [];
+            foreach (string obsName in dto.Obstacles ?? [])
+            {
+                if (Obstacle.Get(obsName, out Obstacle? obs))
+                {
+                    obstaclesIds.Add(obs.ID);
+                    Logger.Log($"Added obstacle {obsName}.");
+                }
+                else
+                    Logger.Log($"obstacle {obsName} is not found!");
+            }
+
+
+            foreach (string skillName in dto.Skills ?? [])
+            {
+                if (Skill.Get(skillName, out Skill? skill))
+                {
+                    room.Add(skill.ID);
+                    Logger.Log($"Added Skill: {skill.Name}");
+                }
+                else
+                    Logger.Log($"Skill {skillName} is not found!");
+            }
         }
         Logger.Log($"---- ------ ----");
     }

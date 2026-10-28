@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("zelda-game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3866faf74b778143426c198166676948439c8111")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+651be7874765531435f76191746abb0e38833b52")]
 [assembly: System.Reflection.AssemblyProductAttribute("zelda-game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("zelda-game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

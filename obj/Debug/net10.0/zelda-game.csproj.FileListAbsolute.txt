@@ -12,3 +12,7 @@
 /home/kero/Workspace/csharp/amp-backend/zelda-game/obj/Debug/net10.0/zelda-game.pdb
 /home/kero/Workspace/csharp/amp-backend/zelda-game/obj/Debug/net10.0/zelda-game.genruntimeconfig.cache
 /home/kero/Workspace/csharp/amp-backend/zelda-game/obj/Debug/net10.0/ref/zelda-game.dll
+/home/kero/Workspace/csharp/amp-backend/zelda-game/bin/Debug/net10.0/Spectre.Console.dll
+/home/kero/Workspace/csharp/amp-backend/zelda-game/bin/Debug/net10.0/Spectre.Console.Ansi.dll
+/home/kero/Workspace/csharp/amp-backend/zelda-game/obj/Debug/net10.0/zelda-game.csproj.AssemblyReference.cache
+/home/kero/Workspace/csharp/amp-backend/zelda-game/obj/Debug/net10.0/zelda-game.csproj.Up2Date

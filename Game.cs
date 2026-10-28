@@ -7,26 +7,26 @@ public class Game
     private bool IsRunning { get; set; } = false;
     private readonly Player Player = new();
 
-    private  Room[,] Rooms { get; set; } = new Room[1,1];
-    private Movement Movement {get; set;} = new(1, 1);
-    private Inventory MyBag {get; set;} = new();
-    
-    public Room CurrentRoom => Rooms[Movement.Pos.x, Movement.Pos.y];
+    private Cell[,] Cells { get; set; } = new Cell[1, 1];
+    private Movement Movement { get; set; } = new(1, 1);
+    private Inventory MyBag { get; set; } = new();
+
+    public Cell CurrentCell => Cells[Movement.Pos.x, Movement.Pos.y];
 
     readonly private CommandHandler Handler;
 
     // -----------------------------------------
-    // Initializes the game with the given filename
     public Game()
     {
         Handler = new(this);
         Logger.Clear();
     }
 
+    // Initializes the game with the given filename
     public void Init(string filename)
     {
-        GameLoader.LoadGame(filename, out var rooms, out var movement);
-        Rooms = rooms;
+        GameLoader.LoadGame(filename, out var cells, out var movement);
+        Cells = cells;
         Movement = movement;
     }
 
@@ -58,50 +58,50 @@ public class Game
         Console.WriteLine($"Moved to {Movement.Pos}");
     }
 
-    public void Pick(Guid itemId)
+    public void Pick(Guid skillId)
     {
-        if (!Item.Get(itemId, out Item? item))
-            throw new ArgumentException($"ItemId {itemId} is not a valid Item ID");
+        if (!Skill.Get(skillId, out Skill? skill))
+            throw new ArgumentException($"SkillId {skillId} is not a valid Skill ID");
 
-        if (!CurrentRoom.HasItem(itemId))
+        if (!CurrentCell.HasSkill(skillId))
         {
-            // User Error: item is not available in the current room
-            Console.WriteLine($"Error: {item.Name} is not available in the current room");
+            // User Error: skill is not available in the current cell
+            Console.WriteLine($"Error: {skill.Name} is not available in the current room");
             return;
         }
 
-        CurrentRoom.Take(itemId);
-        MyBag.Add(itemId);
-        Console.WriteLine($"Picked {item.Name}.");
+        CurrentCell.Take(skillId);
+        MyBag.Add(skillId);
+        Console.WriteLine($"Picked {skill.Name}.");
     }
 
-    public void Drop(Guid itemId)
+    public void Drop(Guid skillId)
     {
-        if (!Item.Get(itemId, out Item? item))
-            throw new ArgumentException($"ItemId {itemId} is not a valid Item ID");
+        if (!Skill.Get(skillId, out Skill? skill))
+            throw new ArgumentException($"SkillId {skillId} is not a valid Skill ID");
 
-        if (!MyBag.HasItem(itemId))
+        if (!MyBag.HasSkill(skillId))
         {
-            // User Error: item is not available in my bag
-            Console.WriteLine($"Error: {item.Name} is not available in my bag.");
+            // User Error: skill is not available in my bag
+            Console.WriteLine($"Error: {skill.Name} is not available in my bag.");
             return;
         }
 
-        MyBag.Drop(itemId);
-        CurrentRoom.Add(itemId);
-        Console.WriteLine($"Dropped {item.Name}.");
+        MyBag.Drop(skillId);
+        CurrentCell.Add(skillId);
+        Console.WriteLine($"Dropped {skill.Name}.");
     }
 
     public void ShowInventory()
     {
-        Console.WriteLine("Current Inventory Items: ");
-        MyBag.ShowItems();
+        Console.WriteLine("Current Inventory Skills: ");
+        MyBag.ShowSkills();
     }
 
-    public void ShowRoomDetails()
+    public void ShowCellDetails()
     {
-        Console.WriteLine("Current Room: ");
-        CurrentRoom.ShowInfo();
+        Console.WriteLine("Current Cell: ");
+        CurrentCell.ShowInfo();
     }
 
 
