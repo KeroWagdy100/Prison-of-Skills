@@ -5,11 +5,15 @@ public class Cell
     private readonly Inventory<Skill> _skills = new();
     private readonly Inventory<Obstacle> _obstacles = new();
 
-    public bool Take(Guid skillId)
+    public bool TakeSkill(Guid skillId)
         => _skills.Drop(skillId);
 
-    public void Add(Guid skillId)
+    public void AddSkill(Guid skillId)
         => _skills.Add(skillId);
+
+    public void AddObstacle(Guid obstacleId)
+        => _obstacles.Add(obstacleId);
+    
 
     public void ShowInfo()
     {
@@ -22,6 +26,8 @@ public class Cell
     public List<Skill> GetSkills()
         => _skills.GetItems();
 
+    public List<Obstacle> GetObstacles()
+        => _obstacles.GetItems();
+
     public string Description { get; set; } = "";
-    public Guid? Obstacle { get; set; }
 }

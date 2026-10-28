@@ -3,8 +3,8 @@ namespace zelda_game;
 
 public class Bag : Inventory<Skill>
 {
-    public int TotalCost { get; private set; } = 0;
-    public int TotalPoints { get; private set; } = 0;
+    public int TotalCost { get; set; } = 0;
+    public int TotalPoints { get; set; } = 0;
 
     public override bool Drop(Guid skillId)
     {

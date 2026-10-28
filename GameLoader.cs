@@ -5,7 +5,7 @@ namespace zelda_game;
 public class GameLoader
 {
     public static void LoadGame(string filename, out Cell[,] cells, out Movement movement)
-    {        
+    {
         if (!File.Exists(filename))
             throw new ArgumentException($"{filename} does not exist. Please ensure the file exists.");
 
@@ -37,7 +37,7 @@ public class GameLoader
         Logger.Log($"---- Loading Skills ----");
         foreach (SkillDto dto in gameDto.Skills)
         {
-            var id = Skill.CreateSkill (
+            var id = Skill.CreateSkill(
                 dto.Skill,
                 Enum.Parse<SkillType>(dto.Type.ToUpper()), // TODO: Use TryParse to handle unexpected exceptions
                 dto.Cost,
@@ -71,7 +71,7 @@ public class GameLoader
                 dto.TimeCost
             );
 
-            if (Obstacle.TryGet<Obstacle>(id, out Obstacle? obs))
+            if (Item.TryGet<Obstacle>(id, out Obstacle? obs))
             {
                 Logger.Success(
                     $"Loaded Obstacle {obs.Name}, Time Cost: {obs.TimeCost}m",
@@ -95,16 +95,15 @@ public class GameLoader
         {
             Logger.Log($"Loading Cell at {dto.X}, {dto.Y}");
 
-            Cell room = cells[dto.X, dto.Y] = new Cell();
-            room.Description = dto.Description;
-            Logger.Success($"Desc: {room.Description}");
+            Cell cell = cells[dto.X, dto.Y] = new Cell();
+            cell.Description = dto.Description;
+            Logger.Success($"Desc: {cell.Description}");
 
-            List<Guid> obstaclesIds = [];
             foreach (string obsName in dto.Obstacles ?? [])
             {
                 if (Item.TryGet<Obstacle>(obsName, out Obstacle? obs))
                 {
-                    obstaclesIds.Add(obs.ID);
+                    cell.AddObstacle(obs.ID);
                     Logger.Success($"Added obstacle {obsName}.");
                 }
                 else
@@ -116,7 +115,7 @@ public class GameLoader
             {
                 if (Item.TryGet<Skill>(skillName, out Skill? skill))
                 {
-                    room.Add(skill.ID);
+                    cell.AddSkill(skill.ID);
                     Logger.Success($"Added Skill: {skill.Name}");
                 }
                 else

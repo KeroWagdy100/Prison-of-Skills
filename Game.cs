@@ -62,7 +62,29 @@ public class Game
             Console.Error($"Cannot move [bold]{direction}[/]");
             return;
         }
+
         Console.Confirm($"Moved {direction} to {Movement.Pos}");
+
+        var myBagSkills = MyBag.GetItems();
+        Console.Confirm($"{CurrentCell.GetObstacles().Count} obstacles waiting");
+
+        bool costChanged = false;
+        foreach (var obs in CurrentCell.GetObstacles())
+        {
+            if (myBagSkills.Any(skill => skill.Type == obs.DefeatedBy))
+            {
+                Console.Story($"Hmmm.. it sounds like you have defeated {obs.Name} because you have a skill of type {obs.DefeatedBy} that defeated {obs.Name}");
+            }
+            else
+            {
+                Console.Story($"OOPS... you've wasted {obs.TimeCost} months becuase you don't have the required skill type {obs.DefeatedBy}");
+                MyBag.TotalCost += obs.TimeCost;
+                costChanged = true;
+            }
+        }
+
+        if (costChanged)
+            Console.Story($"You now have {4*12 - MyBag.TotalCost} months left.");
     }
 
     public void Pick(Guid skillId)
@@ -76,7 +98,7 @@ public class Game
             return;
         }
 
-        CurrentCell.Take(skillId);
+        CurrentCell.TakeSkill(skillId);
         MyBag.Add(skillId);
         Console.Confirm($"Picked [bold]{skill.Name}[/].\n");
         ShowBag();
@@ -95,7 +117,7 @@ public class Game
         }
 
         MyBag.Drop(skillId);
-        CurrentCell.Add(skillId);
+        CurrentCell.AddSkill(skillId);
         Console.Confirm($"Dropped {skill.Name}.");
     }
 

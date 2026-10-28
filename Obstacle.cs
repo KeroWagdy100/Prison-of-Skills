@@ -6,7 +6,7 @@ public class Obstacle: Item
     public SkillType DefeatedBy { get; private set; }
     public int TimeCost { get; private set; }
 
-    private static readonly Dictionary<Guid, Obstacle> allObstacles = [];
+    // private static readonly Dictionary<Guid, Obstacle> allObstacles = [];
 
     public static Guid Create(
         string obstacleName,
@@ -19,7 +19,7 @@ public class Obstacle: Item
             DefeatedBy = defeatedBySkillType,
             TimeCost = timeCost};
         
-        allObstacles.Add(obstacle.ID, obstacle);
+        allItems.Add(obstacle.ID, obstacle);
         return obstacle.ID;
     }
 
