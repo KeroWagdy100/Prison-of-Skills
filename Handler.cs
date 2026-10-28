@@ -82,11 +82,18 @@ public class CommandHandler
         List<Skill> availableSkills = _game.GetCellSkills();
         string[] chosen = [];
 
+        if (availableSkills.Count == 0)
+        {
+            Console.Warning("There are no items to pick :confused_face:");
+            return;
+        }
+
         if (args.Length > 0)
             chosen = args;
         else
         {
-            Console.NormalText($"Current Cell Skills:\n{string.Join('\n', availableSkills)}");
+            _game.ShowCell();
+            // Console.NormalText($"Current Cell Skills:\n{string.Join('\n', availableSkills)}");
             chosen = Console.MultiSelectionPrompt(
                 "which skills to pick?",
                 availableSkills.Select(skill => skill.Name).ToArray()
@@ -99,7 +106,7 @@ public class CommandHandler
             var skill = availableSkills.Find(skill => string.Equals(skillName, skill.Name, StringComparison.OrdinalIgnoreCase));
             if (skill != null)
                 _game.Pick(skill.ID);
-            else if (Skill.Get(skillName, out Skill? skill2))
+            else if (Item.TryGet<Skill>(skillName, out Skill? skill2))
                 Console.Warning($"Skill {skillName} is not available in current brain cell!");
             else
                 Console.Error($"{skillName} is not a valid skill name!");
@@ -109,7 +116,15 @@ public class CommandHandler
     public void HandleDrop(params string[] args)
     {
         List<Skill> availableSkills = _game.GetBagSkills();
+
+        if (availableSkills.Count == 0)
+        {
+            Console.Warning("There are no items to drop :confused_face:");
+            return;
+        }
+
         Console.NormalText($"Bag Skills:\n{string.Join('\n', availableSkills)}");
+
         // return;
         string[] chosen = [];
 
@@ -128,7 +143,7 @@ public class CommandHandler
             var skill = availableSkills.Find(skill => string.Equals(skillName, skill.Name, StringComparison.OrdinalIgnoreCase));
             if (skill != null)
                 _game.Drop(skill.ID);
-            else if (Skill.Get(skillName, out Skill? skill2))
+            else if (Item.TryGet<Skill>(skillName, out Skill? skill2))
                 Console.Warning($"Skill {skillName} is not available in current brain cell!");
             else
                 Console.Error($"{skillName} is not a valid skill name!");

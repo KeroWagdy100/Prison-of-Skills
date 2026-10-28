@@ -24,7 +24,7 @@ public static class Console
         => Print($":cross_mark: {err}", _errorColor);
 
     public static void Warning(string warning)
-        => Print($":warning: {warning}", _warningColor);
+        => Print($":warning:  {warning}", _warningColor);
 
     public static void Story(string text)
         => Print(text, _storyColor);

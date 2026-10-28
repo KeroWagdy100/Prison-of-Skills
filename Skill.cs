@@ -12,31 +12,12 @@ public enum SkillType
 }
 
 
-public class Skill
+public class Skill : Item
 {
-    protected static readonly Dictionary<Guid, Skill> allSkills = [];
 
-    public Guid ID {get;} = Guid.NewGuid();
-    public string Name {get; set;} = "Skill";
-    public SkillType Type {get; set;} = SkillType.GENERIC;
-    public int TimeCost {get; set;}
-    public int Strength {get; set;}
-
-    public static bool Get(Guid skillId, [MaybeNullWhen(false)] out Skill skill)
-    {
-        if (!allSkills.TryGetValue(skillId, out skill))
-            return false;
-        return skill is not null;
-    }
-
-    public static bool Get(string skillName, [MaybeNullWhen(false)] out Skill skill)
-    {
-        skill = null;
-        if (!allSkills.Any(pair => string.Equals(pair.Value.Name, skillName, StringComparison.OrdinalIgnoreCase)))
-            return false;
-        skill = allSkills.First(pair => string.Equals(pair.Value.Name, skillName, StringComparison.OrdinalIgnoreCase)).Value;
-        return skill is not null;
-    }
+    public SkillType Type { get; set; } = SkillType.GENERIC;
+    public int TimeCost { get; set; }
+    public int Strength { get; set; }
 
     public static Guid CreateSkill(string skillName, SkillType type, int costInMonths, int strength)
     {
@@ -48,12 +29,12 @@ public class Skill
             Strength = strength
         };
 
-        allSkills.Add(skill.ID, skill);
+        allItems.Add(skill.ID, skill);
         return skill.ID;
     }
 
-    private Skill() {}
+    private Skill() { }
 
     public override string ToString()
-        => $"{Name} of type {Type} costs {TimeCost}m and gives {Strength} points.";
+        => $"[bold white on black]{Name}[/] of type [italic]{Type}[/], costs [bold blue]{TimeCost} months[/] and adds [bold green]{Strength} points[/].";
 }

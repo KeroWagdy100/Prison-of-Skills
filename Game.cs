@@ -67,27 +67,27 @@ public class Game
 
     public void Pick(Guid skillId)
     {
-        if (!Skill.Get(skillId, out Skill? skill))
+        if (!Item.TryGet<Skill>(skillId, out Skill? skill))
             throw new ArgumentException($"SkillId {skillId} is not a valid Skill ID");
 
         if (!CurrentCell.HasSkill(skillId))
         {
-            // User Error: skill is not available in the current cell
             Console.Error($"Error: {skill.Name} is not available in the current room");
             return;
         }
 
         CurrentCell.Take(skillId);
         MyBag.Add(skillId);
-        Console.Confirm($"Picked {skill.Name}.");
+        Console.Confirm($"Picked [bold]{skill.Name}[/].\n");
+        ShowBag();
     }
 
     public void Drop(Guid skillId)
     {
-        if (!Skill.Get(skillId, out Skill? skill))
+        if (!Item.TryGet<Skill>(skillId, out Skill? skill))
             throw new ArgumentException($"SkillId {skillId} is not a valid Skill ID");
 
-        if (!MyBag.HasSkill(skillId))
+        if (!MyBag.HasItem(skillId))
         {
             // User Error: skill is not available in my bag
             Console.Error($"Error: {skill.Name} is not available in my bag.");
@@ -101,21 +101,18 @@ public class Game
 
     public void ShowBag()
     {
-        var list = MyBag.GetSkills();
-        if (list.Count == 0)
-            Console.Story($"Your Bag of skills is currently empty :pleading_face:");
-        else
-            Console.NormalText($"Your Bag of Skills:\n{string.Join('\n', list)}");
+        Console.NormalText(MyBag.ToString());
     }
 
     public void ShowCell()
     {
-        Console.NormalText("Current Cell: ");
+        Console.NormalText($"Current Cell: ({Movement.Pos.x}, {Movement.Pos.y})");
         CurrentCell.ShowInfo();
+        Console.NormalText("");
     }
 
     public List<Skill> GetBagSkills()
-        => MyBag.GetSkills();
+        => MyBag.GetItems();
 
     public List<Skill> GetCellSkills()
         => CurrentCell.GetSkills();

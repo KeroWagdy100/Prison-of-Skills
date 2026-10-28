@@ -44,7 +44,7 @@ public class GameLoader
                 dto.Strength
             );
 
-            if (Skill.Get(id, out Skill? skill))
+            if (Item.TryGet<Skill>(id, out Skill? skill))
             {
                 Logger.Success(
                     $"Loaded SKill {skill.Name}, Type: {skill.Type}",
@@ -71,7 +71,7 @@ public class GameLoader
                 dto.TimeCost
             );
 
-            if (Obstacle.Get(id, out Obstacle? obs))
+            if (Obstacle.TryGet<Obstacle>(id, out Obstacle? obs))
             {
                 Logger.Success(
                     $"Loaded Obstacle {obs.Name}, Time Cost: {obs.TimeCost}m",
@@ -102,7 +102,7 @@ public class GameLoader
             List<Guid> obstaclesIds = [];
             foreach (string obsName in dto.Obstacles ?? [])
             {
-                if (Obstacle.Get(obsName, out Obstacle? obs))
+                if (Item.TryGet<Obstacle>(obsName, out Obstacle? obs))
                 {
                     obstaclesIds.Add(obs.ID);
                     Logger.Success($"Added obstacle {obsName}.");
@@ -114,7 +114,7 @@ public class GameLoader
 
             foreach (string skillName in dto.Skills ?? [])
             {
-                if (Skill.Get(skillName, out Skill? skill))
+                if (Item.TryGet<Skill>(skillName, out Skill? skill))
                 {
                     room.Add(skill.ID);
                     Logger.Success($"Added Skill: {skill.Name}");

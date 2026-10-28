@@ -1,30 +1,47 @@
-using System.Data.Common;
 
 namespace zelda_game;
 
-public class Bag
+public class Bag : Inventory<Skill>
 {
-    private readonly List<Guid> _skillIds = [];
+    public int TotalCost { get; private set; } = 0;
+    public int TotalPoints { get; private set; } = 0;
 
-    public bool Drop(Guid skillId)
-        => _skillIds.Remove(skillId);
-
-    public void Add(Guid skillId)
-        => _skillIds.Add(skillId);
-
-    public bool HasSkill(Guid skillId)
-        => _skillIds.Contains(skillId);
-
-    public List<Skill> GetSkills()
+    public override bool Drop(Guid skillId)
     {
-        List<Skill> listOfSkills = [];
-        foreach (Guid id in _skillIds)
+        // TODO: Unnecessary second check
+        if (!Item.TryGet<Skill>(skillId, out Skill? skill))
+            return false;
+
+        if (base.Drop(skillId))
         {
-            if (Skill.Get(id, out Skill? skill))
-                listOfSkills.Add(skill);
-            else
-                throw new Exception($"Bag contains invalid skill ID");
+            TotalCost -= skill.TimeCost;
+            TotalPoints -= skill.Strength;
+            return true;
         }
-        return listOfSkills;
+        return false;
+    }
+
+    public override void Add(Guid skillId)
+    {
+        // TODO: Unnecessary second check
+        if (!Item.TryGet<Skill>(skillId, out Skill? skill))
+            return;
+
+        base.Add(skillId);
+        TotalCost += skill.TimeCost;
+        TotalPoints += skill.Strength;
+    }
+
+    public override string ToString()
+    {
+        var list = GetItems();
+        if (list.Count == 0)
+            return $"Bag of skills is currently empty :pleading_face:";
+        else
+            return
+              $"Bag of Skills:\n- {string.Join("\n- ", list)}\n"
+            + $"\t[grey]Total time cost: [blue bold]{TotalCost} months[/]"
+            + $", [italic]You have [white bold]{4 * 12 - TotalCost} months[/] remaning.[/][/]\n"
+            + $"\t[grey]You currently have [bold green]{TotalPoints} points[/][/]";
     }
 }
