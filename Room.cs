@@ -12,7 +12,7 @@ public class Cell
 
     public void ShowInfo()
     {
-        Console.WriteLine($"Skills: ");
+        Console.NormalText($"Skills: ");
         _inventory.ShowSkills();
     }
 

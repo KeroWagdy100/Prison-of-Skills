@@ -23,7 +23,7 @@ public class Inventory
                 continue;
             }
 
-            Console.WriteLine($"{skill.Name} of type {skill.Type} costs {skill.TimeCost}m and gives {skill.Strength} points.");
+            Console.NormalText($"{skill.Name} of type {skill.Type} costs {skill.TimeCost}m and gives {skill.Strength} points.");
         }
     }
 }

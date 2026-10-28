@@ -1,3 +1,5 @@
+using Spectre.Console;
+
 namespace zelda_game;
 
 /* Command Handler */
@@ -12,7 +14,7 @@ public class CommandHandler
 {
     private readonly Game _game;
 
-    private readonly Dictionary<string, Command> AllCommmands = [];
+    private readonly Dictionary<string, Command> _allCommands = [];
 
     private delegate void handleDelegate(params string[] args);
     private readonly Dictionary<Command, handleDelegate> commandToHandler = [];
@@ -26,7 +28,7 @@ public class CommandHandler
     private void LoadCommands()
     {
         foreach (var command in Enum.GetValues<Command>())
-            AllCommmands.Add(command.ToString(), command);
+            _allCommands.Add(command.ToString(), command);
 
         commandToHandler[Command.MOVE] = HandleMove;
         commandToHandler[Command.PICK] = HandlePick;
@@ -40,12 +42,12 @@ public class CommandHandler
     public void Handle(string line)
     {
         var words = line.Trim().Split();
-        string commandString = words[0].ToUpper();
+        string commandString = words[0];
 
-        if (!AllCommmands.TryGetValue(commandString, out Command command))
+        if (!_allCommands.TryGetValue(commandString.ToUpper(), out Command command))
         {
             // Error Message (Not a valid command)
-            Console.WriteLine($"Error: {commandString} is not a valid command\n");
+            Console.Error($"[bold]{commandString}[/] is not a valid command.");
             return;
         }
 
@@ -55,13 +57,15 @@ public class CommandHandler
     public void HandleMove(params string[] args)
     {
         if (args.Length != 1)
-            throw new ArgumentException("Move should accept one argument only: [Direction]");
+            throw new ArgumentException("Move should accept exactly one argument: [Direction]");
         var directions = Enum.GetValues<Direction>().ToList();
 
         if (directions.Any(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)))
             _game.Move(directions.Find(d => string.Equals(d.ToString(), args[0], StringComparison.OrdinalIgnoreCase)));
         else
-            throw new ArgumentException($"[{args[0]}] is not a direction.");
+        {
+            Console.Error($"[bold]{args[0]}[/] is not a valid direction.");
+        }
     }
 
     public void HandlePick(params string[] args)
@@ -71,7 +75,7 @@ public class CommandHandler
             if (!Skill.Get(arg, out Skill? skill))
             {
                 // User Error: {arg} is not an skill
-                Console.WriteLine($"Error: {arg} is not an skill");
+                Console.Error($"Error: {arg} is not an skill");
                 continue;
             }
             _game.Pick(skill.ID);
@@ -85,7 +89,7 @@ public class CommandHandler
             if (!Skill.Get(arg, out Skill? skill))
             {
                 // User Error: {arg} is not an skill
-                Console.WriteLine($"Error: {arg} is not an skill");
+                Console.Error($"Error: {arg} is not an skill");
                 continue;
             }
             _game.Drop(skill.ID);
@@ -101,7 +105,7 @@ public class CommandHandler
         if (args.Length > 0)
         {
             // User Warning: Inventory Command doesn't require any arguments
-            Console.WriteLine($"Warning: Inventory command doesn't require any arguments");
+            Console.Warning($"Warning: Inventory command doesn't require any arguments");
             return;
         }
         _game.ShowInventory();
@@ -112,7 +116,7 @@ public class CommandHandler
         if (args.Length > 0)
         {
             // User Warning: Look Command doesn't require any arguments
-            Console.WriteLine($"Warning: Look command doesn't require any arguments");
+            Console.Warning($"Warning: Look command doesn't require any arguments");
             return;
         }
         _game.ShowCellDetails();

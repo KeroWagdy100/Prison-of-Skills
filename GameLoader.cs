@@ -17,9 +17,9 @@ public class GameLoader
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Failed to load game data ({filename} is not well formatted)");
-            Console.WriteLine($"Please check and validate Game DTO structure and try again.");
-            Logger.Log(ex);
+            Console.Error($"Failed to load game data ({filename} is not well formatted)");
+            Console.Error($"Please check and validate Game DTO structure and try again.");
+            Logger.Error(ex.ToString());
         }
 
         movement = new(gameDto.Rows, gameDto.Cols);
@@ -43,12 +43,14 @@ public class GameLoader
 
             if (Skill.Get(id, out Skill? skill))
             {
-                Logger.Log($"Loaded SKill {skill.Name}, Type: {skill.Type}m");
-                Logger.Log($"Time Cost: {skill.TimeCost}m, Strength: {skill.Strength}\n");
+                Logger.Success(
+                    $"Loaded SKill {skill.Name}, Type: {skill.Type}m",
+                    $"Time Cost: {skill.TimeCost}m, Strength: {skill.Strength}\n"
+                );
             }
             else
             {
-                Logger.Log($"Could not load skill with name: {dto.Skill}");
+                Logger.Error($"Could not load skill with name: {dto.Skill}");
             }
         }
         Logger.Log($"---- ------ ----");
@@ -68,12 +70,14 @@ public class GameLoader
 
             if (Obstacle.Get(id, out Obstacle? obs))
             {
-                Logger.Log($"Loaded Obstacle {obs.Name}, Time Cost: {obs.TimeCost}m");
-                Logger.Log($"Defeated by: {obs.DefeatedBy}\n");
+                Logger.Success(
+                    $"Loaded Obstacle {obs.Name}, Time Cost: {obs.TimeCost}m",
+                    $"Defeated by: {obs.DefeatedBy}\n"
+                );
             }
             else
             {
-                Logger.Log($"Could not load obstacle with name: {dto.Obstacle}");
+                Logger.Error($"Could not load obstacle with name: {dto.Obstacle}");
             }
         }
         Logger.Log($"---- ------ ----");
@@ -90,7 +94,7 @@ public class GameLoader
 
             Cell room = cells[dto.X, dto.Y] = new Cell();
             room.Description = dto.Description;
-            Logger.Log($"Desc: {room.Description}");
+            Logger.Success($"Desc: {room.Description}");
 
             List<Guid> obstaclesIds = [];
             foreach (string obsName in dto.Obstacles ?? [])
@@ -98,10 +102,10 @@ public class GameLoader
                 if (Obstacle.Get(obsName, out Obstacle? obs))
                 {
                     obstaclesIds.Add(obs.ID);
-                    Logger.Log($"Added obstacle {obsName}.");
+                    Logger.Success($"Added obstacle {obsName}.");
                 }
                 else
-                    Logger.Log($"obstacle {obsName} is not found!");
+                    Logger.Error($"obstacle {obsName} is not found!");
             }
 
 
@@ -110,10 +114,10 @@ public class GameLoader
                 if (Skill.Get(skillName, out Skill? skill))
                 {
                     room.Add(skill.ID);
-                    Logger.Log($"Added Skill: {skill.Name}");
+                    Logger.Success($"Added Skill: {skill.Name}");
                 }
                 else
-                    Logger.Log($"Skill {skillName} is not found!");
+                    Logger.Error($"Skill {skillName} is not found!");
             }
         }
         Logger.Log($"---- ------ ----");

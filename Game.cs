@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace zelda_game;
 
 public class Game
@@ -36,7 +34,7 @@ public class Game
 
         while (IsRunning)
         {
-            string? line = Console.ReadLine();
+            string? line = Console.Ask();
             if (line is null)
             {
                 Exit();
@@ -52,10 +50,10 @@ public class Game
         if (!Movement.MoveTo(direction))
         {
             // Error Message: out of map bounds
-            Console.WriteLine($"Cannot move [{direction}]");
+            Console.Error($"Cannot move [bold]{direction}[/]");
             return;
         }
-        Console.WriteLine($"Moved to {Movement.Pos}");
+        Console.Confirm($"Moved to {Movement.Pos}");
     }
 
     public void Pick(Guid skillId)
@@ -66,13 +64,13 @@ public class Game
         if (!CurrentCell.HasSkill(skillId))
         {
             // User Error: skill is not available in the current cell
-            Console.WriteLine($"Error: {skill.Name} is not available in the current room");
+            Console.Error($"Error: {skill.Name} is not available in the current room");
             return;
         }
 
         CurrentCell.Take(skillId);
         MyBag.Add(skillId);
-        Console.WriteLine($"Picked {skill.Name}.");
+        Console.Confirm($"Picked {skill.Name}.");
     }
 
     public void Drop(Guid skillId)
@@ -83,24 +81,24 @@ public class Game
         if (!MyBag.HasSkill(skillId))
         {
             // User Error: skill is not available in my bag
-            Console.WriteLine($"Error: {skill.Name} is not available in my bag.");
+            Console.Error($"Error: {skill.Name} is not available in my bag.");
             return;
         }
 
         MyBag.Drop(skillId);
         CurrentCell.Add(skillId);
-        Console.WriteLine($"Dropped {skill.Name}.");
+        Console.Confirm($"Dropped {skill.Name}.");
     }
 
     public void ShowInventory()
     {
-        Console.WriteLine("Current Inventory Skills: ");
+        Console.NormalText("Current Inventory Skills: ");
         MyBag.ShowSkills();
     }
 
     public void ShowCellDetails()
     {
-        Console.WriteLine("Current Cell: ");
+        Console.NormalText("Current Cell: ");
         CurrentCell.ShowInfo();
     }
 

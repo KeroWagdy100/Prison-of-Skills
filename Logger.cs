@@ -9,12 +9,22 @@ public static class Logger
         foreach (string str in strings)
             writer.WriteLine(str);
     }
-    public static void Log(params Exception[] strings)
+
+    public static void Success(params string[] strings)
     {
         using StreamWriter writer = new(_logfile, true);
-        foreach (Exception ex in strings)
-            writer.WriteLine(ex);
+        writer.Write("[SUCCESS]: ");
+        foreach (string str in strings)
+            writer.WriteLine($"{str}");
     }
+
+    public static void Error(params string[] errors)
+    {
+        using StreamWriter writer = new(_logfile, true);
+        foreach (string err in errors)
+            writer.WriteLine($"[ERROR]: {err}");
+    }
+
     public static void Clear()
     {
         File.WriteAllText(_logfile, null);
