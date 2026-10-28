@@ -21,10 +21,10 @@ public static class Console
         => AnsiConsole.Clear();
 
     public static void Error(string err)
-        => Print(err, _errorColor);
+        => Print($":cross_mark: {err}", _errorColor);
 
     public static void Warning(string warning)
-        => Print(warning, _warningColor);
+        => Print($":warning: {warning}", _warningColor);
 
     public static void Story(string text)
         => Print(text, _storyColor);
@@ -54,18 +54,27 @@ public static class Console
     public static List<string> MultiSelectionPrompt(string prompt, string[] choices)
     {
         return AnsiConsole.Prompt(
-            new MultiSelectionPrompt<string>().Title(prompt).AddChoices(choices).AddCancelResult("CANCEL")
+            new MultiSelectionPrompt<string>()
+                .Title(prompt)
+                .AddChoices(choices)
+                .AddCancelResult("CANCEL")
         );
     }
 
     // returns CANCEL if user cancels.
     public static string SelectionPrompt(string prompt, string[] choices)
         => AnsiConsole.Prompt(
-            new SelectionPrompt<string>().Title(prompt).AddChoices(choices).AddCancelResult("CANCEL")
+            new SelectionPrompt<string>()
+                .Title(prompt)
+                .AddChoices(choices)
+                .AddCancelResult("CANCEL")
+                .EnableSearch()
+                .SearchPlaceholderText("Type to search...")
         );
 
     public static async Task SlowPrint(string text)
     {
+        AnsiConsole.MarkupLine("[dim italic on black]Press Space/Escape/Enter to skip[/]");
         text = AnsiMarkup.Remove(text);
         Random random = new();
         bool skip = false;

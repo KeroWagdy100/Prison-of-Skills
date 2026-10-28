@@ -102,7 +102,10 @@ public class Game
     public void ShowBag()
     {
         var list = MyBag.GetSkills();
-        Console.NormalText($"Current Bag Skills: {string.Join('\n', list)}");
+        if (list.Count == 0)
+            Console.Story($"Your Bag of skills is currently empty :pleading_face:");
+        else
+            Console.NormalText($"Your Bag of Skills:\n{string.Join('\n', list)}");
     }
 
     public void ShowCell()

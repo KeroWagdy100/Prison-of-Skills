@@ -95,6 +95,7 @@ public class CommandHandler
 
         foreach (string skillName in chosen)
         {
+            if (skillName == "CANCEL") return;
             var skill = availableSkills.Find(skill => string.Equals(skillName, skill.Name, StringComparison.OrdinalIgnoreCase));
             if (skill != null)
                 _game.Pick(skill.ID);
