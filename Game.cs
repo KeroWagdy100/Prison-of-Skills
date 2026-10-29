@@ -18,6 +18,7 @@ public class Game
     public Game()
     {
         Handler = new(this);
+        Logger.Init();
         Logger.Clear();
     }
 

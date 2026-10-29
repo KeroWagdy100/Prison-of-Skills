@@ -3,6 +3,12 @@ namespace prison_of_skills;
 public static class Logger
 {
     readonly static public string _logfile = "log/Game.log";
+
+    public static void Init()
+    {
+        Directory.CreateDirectory(Path.GetDirectoryName(_logfile)!);
+    }
+
     public static void Log(params string[] strings)
     {
         using StreamWriter writer = new(_logfile, true);
