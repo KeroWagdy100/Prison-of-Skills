@@ -52,7 +52,7 @@ public class Game
         => Console.SlowPrint(Console.GetStaticText("intro"));
 
     public void ShowCommands()
-        => Console.SlowPrint(Console.GetStaticText("commands"));
+        => Console.NormalText(Console.GetStaticText("commands"));
 
     public void Move(Direction direction)
     {

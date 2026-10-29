@@ -153,7 +153,7 @@ public class CommandHandler
 
     public void HandleShow(params string[] args)
     {
-        string[] choices = ["BAG", "CELL"];
+        string[] choices = ["BAG", "CELL", "COMMANDS", "INTRO"];
         if (args.Length > 1)
         {
             Console.Warning($"Warning: Show command can have maximum 1 argument.");
@@ -163,7 +163,7 @@ public class CommandHandler
         if (args.Length == 1)
         {
             args[0] = args[0].ToUpper();
-            if (args[0] == "BAG" || args[0] == "CELL")
+            if (choices.Contains(args[0]))
                 choice = args[0];
             else
                 Console.Error($"[bold]{args[0]}[/] is not a valid choice.");
@@ -177,8 +177,12 @@ public class CommandHandler
 
         if (choice == "BAG")
             _game.ShowBag();
-        else
+        else if (choice == "CELL")
             _game.ShowCell();
+        else if (choice == "COMMANDS")
+            _game.ShowCommands();
+        else if (choice == "INTRO")
+            _game.ShowIntro();
     }
 
     public void HandleClear(params string[] args)

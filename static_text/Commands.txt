@@ -1,8 +1,10 @@
-Commands: (all commands are case insensitive. Move = MOVE = move)
-MOVE <LEFT/RIGHT/UP/DOWN>
-SHOW <CELL/BAG> # shows current cell info/your bag of skills
-PICK <skill_name> # skill must be currently available in the cell
-DROP <skill_name> # skill must be currently in your bag of skills
-CLEAR # clear screen
-RESTART
-EXIT
+[bold]Commands:[/] [dim italic](all commands are case insensitive. Move = MOVE = move)[/]
+[bold yellow]MOVE[/] <LEFT/RIGHT/UP/DOWN>
+[bold yellow]SHOW[/] <CELL/BAG/COMMANDS/INTRO> [dim italic]# shows current cell info/your bag of skills or commands/intro static text[/]
+[bold yellow]PICK[/] <skill_name> [dim italic]# skill must be currently available in the cell[/]
+[bold yellow]DROP[/] <skill_name> [dim italic]# skill must be currently in your bag of skills[/]
+[bold yellow]CLEAR[/] [dim italic]# clear screen[/]
+[bold DarkMagenta_1]RESTART[/]
+[bold red]EXIT[/]
+    [italic][red on yellow]NOTE:[/] You can enter command name and select option from a menu.[/]
+
