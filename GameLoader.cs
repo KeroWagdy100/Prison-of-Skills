@@ -68,7 +68,9 @@ public class GameLoader
             var id = Obstacle.Create(
                 dto.Obstacle,
                 Enum.Parse<SkillType>(dto.DefeatedBy.ToUpper()),
-                dto.TimeCost
+                dto.TimeCost,
+                dto.TrapText,
+                dto.PassedText
             );
 
             if (Item.TryGet<Obstacle>(id, out Obstacle? obs))

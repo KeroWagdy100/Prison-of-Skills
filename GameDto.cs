@@ -28,6 +28,8 @@ public record ObstacleDto
     public int TimeCost { get; set; }
     public string DefeatedBy { get; set; } = "";
     public int? RewardCoins { get; set; } = 0;
+    public string TrapText { get; set; } = "";
+    public string PassedText { get; set; } = "";
 }
 
 public class CellDto

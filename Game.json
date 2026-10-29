@@ -134,22 +134,30 @@
         {
             "Obstacle": "Brainrot",
             "TimeCost": 18,
-            "DefeatedBy": "Technology"
+            "DefeatedBy": "Technology",
+            "TrapText": "After 10 continuous hours of scrolling on your phone, you're diagnosed to be Brainrotted.\nDamaging your brain cells with junky reels resulted in wasting 1.5 years!\n",
+            "PassedText": "After 10 continuous hours of scrolling on your phone, you're diagnosed to be Brainrotted.\nFortunately, you have a technology skill in your bag.. that makes you a responsible man/woman\nthat cares about his life and don't waste his/her time on junky reels."
         },
         {
             "Obstacle": "AI",
             "TimeCost": 24,
-            "DefeatedBy": "Database"
+            "DefeatedBy": "Database",
+            "TrapText": "Claude, ChatGPT, Gemini, and a lot more are seeking to replace you in the market.\nPeople say that they cost much less money and are 10x faster than you.\nAfter being frustrated by AI, you wasted 2 years learning nothing because it doesn't worth it anymore.",
+            "PassedText": "Claude, ChatGPT, Gemini, and a lot more are seeking to replace you in the market.\nPeople say that they cost much less money and are 10x faster than you.\nThanks to your Database skill in your bag, you didn't listen to them and kept going."
         },
         {
             "Obstacle": "Laziness",
             "TimeCost": 12,
-            "DefeatedBy": "Language"
+            "DefeatedBy": "Language",
+            "TrapText": "Laziness is a worldwide obstacle that tackles all human beings.\nGreat scientists were said to be lazy, although they lived an astonishing life.\nBut since you're still a young irresponsible person, you have wasted a whole year\nwatching TV and movies, playing video games and learning nothing.",
+            "PassedText": "Laziness is a worldwide obstacle that tackles all human beings.\nGreat scientists were said to be lazy, although they lived an astonishing life.\nThanks to your ability to write code in any programming language, you have passed this deadly obstacle."
         },
         {
             "Obstacle": "Boredom",
             "TimeCost": 7,
-            "DefeatedBy": "DSA"
+            "DefeatedBy": "DSA",
+            "TrapText": "Let's agree that Software Development is a very interesting job with a very\ngood opportunity to show your creativity in too many ways.\nBut at your early career, learning some topics like Networking and Project Management\ncan be very boring.. you haven't prepared well for these topics :(\nYou have wasted 7 months trying to escape boring topics.",
+            "PassedText": "Let's agree that Software Development is a very interesting job with a very\ngood opportunity to show your creativity in too many ways.\nBut at your early career, learning some topics like Networking and Project Management\ncan be very boring. Thanks to your ability to solve DSU and DP problems, you\nhave avoided wasting time because of boredom."
         }
     ],
 

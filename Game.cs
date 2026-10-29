@@ -66,18 +66,19 @@ public class Game
         Console.Confirm($"Moved {direction} to {Movement.Pos}");
 
         var myBagSkills = MyBag.GetItems();
-        Console.Confirm($"{CurrentCell.GetObstacles().Count} obstacles waiting");
 
         bool costChanged = false;
         foreach (var obs in CurrentCell.GetObstacles())
         {
             if (myBagSkills.Any(skill => skill.Type == obs.DefeatedBy))
             {
-                Console.SlowPrint($"Hmmm.. it sounds like you have defeated {obs.Name} because you have a skill of type {obs.DefeatedBy} that defeated {obs.Name}");
+                Console.SlowPrint($"{obs.PassedText}");
+                Console.SlowPrint($"[green]You passed the obstacle without wasting time. :happy_face:[/]");
             }
             else
             {
-                Console.SlowPrint($"OOPS... you've wasted {obs.TimeCost} months becuase you don't have the required skill type {obs.DefeatedBy}");
+                Console.SlowPrint($"{obs.TrapText}");
+                Console.Story($"You could have avoided wasting [bold red]{obs.TimeCost} months[/] if you had learned any {obs.DefeatedBy} skill. :crying_face:");
                 MyBag.TimeWasted += obs.TimeCost;
                 costChanged = true;
             }
