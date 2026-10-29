@@ -41,6 +41,6 @@ public class Inventory<T> where T : Item
     {
         var items = GetItems();
 
-        return items.Count == 0 ? "[dim italic]Empty[/]" : $"Items:\n- {string.Join("\n- ", items)}";
+        return items.Count == 0 ? "[dim italic]Empty[/]" : $"- {string.Join("\n- ", items)}";
     }
 }

@@ -74,10 +74,10 @@ public static class Console
 
     public static void SlowPrint(string text)
     {
-        AnsiConsole.MarkupLine("[dim italic on black]Press Space/Escape/Enter to skip[/]");
+        AnsiConsole.MarkupLine("[dim italic on black]Press Space/Enter to fast forward, Escape to skip[/]");
         text = AnsiMarkup.Remove(text);
         Random random = new();
-        bool skip = false;
+        bool skip = false, fastForward = false;
         for (int i = 0; i < text.Length; ++i)
         {
             if (System.Console.KeyAvailable)
@@ -85,10 +85,12 @@ public static class Console
                 var keyInfo = System.Console.ReadKey(true);
                 switch (keyInfo.Key)
                 {
-                    case ConsoleKey.Enter:
-                    case ConsoleKey.Spacebar:
                     case ConsoleKey.Escape:
                         skip = true;
+                        break;
+                    case ConsoleKey.Spacebar:
+                    case ConsoleKey.Enter:
+                        fastForward = true;
                         break;
                 }
             }
@@ -97,11 +99,10 @@ public static class Console
 
             AnsiConsole.Markup($"{text[i]}");
 
-            int delayInMilliSeconds = random.Next(20, 80);
+            int delayInMilliSeconds = fastForward ? 0 : random.Next(20, 80);
             if (text[i] == '\n')
                 delayInMilliSeconds += 200;
             Thread.Sleep(delayInMilliSeconds);
-            // await Task.Delay(delayInMilliSeconds);
         }
 
         if (skip)

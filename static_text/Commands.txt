@@ -6,5 +6,5 @@
 [bold yellow]CLEAR[/] [dim italic]# clear screen[/]
 [bold DarkMagenta_1]RESTART[/]
 [bold red]EXIT[/]
-    [italic][red on yellow]NOTE:[/] You can enter command name and select option from a menu.[/]
+    [italic][red on yellow]NOTE:[/] You can enter the command name only and select option/s from a menu.[/]
 
