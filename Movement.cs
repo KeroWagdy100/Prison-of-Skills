@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 
-namespace zelda_game;
+namespace prison_of_skills;
 
 public enum Direction
 {
@@ -39,7 +39,7 @@ public class Movement(int BoundWidth, int BoundHeight, Position initalPosition =
         if (nx < 0 || nx >= Width || ny < 0 || ny >= Height)
             return false;
 
-        Pos = new Position{x = nx, y = ny};
+        Pos = new Position { x = nx, y = ny };
         return true;
     }
 }

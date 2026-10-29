@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-namespace zelda_game;
+namespace prison_of_skills;
 
 public enum SkillType
 {

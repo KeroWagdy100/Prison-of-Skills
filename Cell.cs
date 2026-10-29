@@ -1,4 +1,4 @@
-namespace zelda_game;
+namespace prison_of_skills;
 
 public class Cell
 {
@@ -13,7 +13,7 @@ public class Cell
 
     public void AddObstacle(Guid obstacleId)
         => _obstacles.Add(obstacleId);
-    
+
 
     public void ShowInfo()
     {
@@ -22,8 +22,8 @@ public class Cell
 
     public bool HasSkill(Guid skillId)
         => _skills.HasItem(skillId);
-    
-    public bool IsFinalCell {get; set;} = false;
+
+    public bool IsFinalCell { get; set; } = false;
 
     public List<Skill> GetSkills()
         => _skills.GetItems();

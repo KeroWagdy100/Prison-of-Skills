@@ -1,4 +1,4 @@
-namespace zelda_game;
+namespace prison_of_skills;
 
 public static class Logger
 {

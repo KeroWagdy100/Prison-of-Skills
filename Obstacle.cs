@@ -1,12 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
-namespace zelda_game;
+namespace prison_of_skills;
 
-public class Obstacle: Item
+public class Obstacle : Item
 {
     public SkillType DefeatedBy { get; private set; }
     public int TimeCost { get; private set; }
-    public string TrapText {get; private set;} = "";
-    public string PassedText {get; private set;} = "";
+    public string TrapText { get; private set; } = "";
+    public string PassedText { get; private set; } = "";
 
     // private static readonly Dictionary<Guid, Obstacle> allObstacles = [];
 
@@ -18,14 +18,15 @@ public class Obstacle: Item
         string passedText
         )
     {
-        Obstacle obstacle = new() {
+        Obstacle obstacle = new()
+        {
             Name = obstacleName,
             DefeatedBy = defeatedBySkillType,
             TimeCost = timeCost,
             TrapText = trapText,
             PassedText = passedText
-            };
-        
+        };
+
         allItems.Add(obstacle.ID, obstacle);
         return obstacle.ID;
     }

@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-namespace zelda_game;
+namespace prison_of_skills;
 
 
 public class Item
@@ -31,7 +31,7 @@ public class Item
     }
 
     // For inherited types of Item
-    public static bool TryGet<T>(Guid itemId, [MaybeNullWhen(false)] out T item) where T: Item
+    public static bool TryGet<T>(Guid itemId, [MaybeNullWhen(false)] out T item) where T : Item
     {
         if (Get(itemId, out Item? temp) && temp is T typedItem)
         {
@@ -44,7 +44,7 @@ public class Item
     }
 
     // For inherited types of Item
-    public static bool TryGet<T>(string name, [MaybeNullWhen(false)] out T item) where T: Item
+    public static bool TryGet<T>(string name, [MaybeNullWhen(false)] out T item) where T : Item
     {
         if (Get(name, out Item? temp) && temp is T typedItem)
         {

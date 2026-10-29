@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Text.Json;
-namespace zelda_game;
+namespace prison_of_skills;
 
 public class GameLoader
 {
@@ -126,7 +126,7 @@ public class GameLoader
 
             if (dto.X == 2 && dto.Y == 3)
                 cell.IsFinalCell = true;
-                
+
         }
         Logger.Log($"---- ------ ----");
     }

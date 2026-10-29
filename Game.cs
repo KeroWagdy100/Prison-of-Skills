@@ -1,6 +1,6 @@
 using Spectre.Console;
 
-namespace zelda_game;
+namespace prison_of_skills;
 
 public class Game
 {
@@ -86,8 +86,8 @@ public class Game
         }
 
         if (costChanged)
-            Console.Story($"You now have {4*12 - MyBag.TotalCost} months left.");
-        
+            Console.Story($"You now have {4 * 12 - MyBag.TotalCost} months left.");
+
         if (CurrentCell.IsFinalCell)
         {
             EndGame();
@@ -101,7 +101,7 @@ public class Game
         HashSet<SkillType> typesGained = [];
         foreach (var skill in MyBag.GetItems())
             typesGained.Add(skill.Type);
-        
+
         List<SkillType> minimumSetOfTypes = [
             SkillType.LANGUAGE,
             SkillType.DATABASE,
@@ -112,7 +112,7 @@ public class Game
 
         foreach (SkillType type in minimumSetOfTypes)
             passed &= typesGained.Contains(type);
-        
+
         DateTime tomorrow = DateTime.Today.AddDays(1).AddHours(18);
         if (passed)
         {
@@ -123,8 +123,8 @@ public class Game
             {
                 Thread.Sleep(3000);
             });
-  
-            
+
+
             Console.NormalText($"[green][bold]Interview Passed[/] - You got accepted in the job.\nGood Luck in your career and don't forget to send me a referral [blue underline link=https://www.linkedin.com/in/kerowagdy/]@linkedin: [bold]Kero Wagdy[/][/] :glowing_star::winking_face:[/]");
         }
         else

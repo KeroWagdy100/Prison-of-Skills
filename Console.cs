@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Spectre.Console;
 
-namespace zelda_game;
+namespace prison_of_skills;
 
 public static class Console
 {
@@ -88,8 +88,8 @@ public static class Console
                     case ConsoleKey.Enter:
                     case ConsoleKey.Spacebar:
                     case ConsoleKey.Escape:
-                    skip = true;
-                    break;
+                        skip = true;
+                        break;
                 }
             }
 
@@ -108,5 +108,5 @@ public static class Console
             AnsiConsole.MarkupLine("[italic]...Skipped[/]");
         AnsiConsole.WriteLine();
     }
-    
+
 }

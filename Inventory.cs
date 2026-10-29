@@ -1,4 +1,4 @@
-namespace zelda_game;
+namespace prison_of_skills;
 
 // A generic container for any type of items
 public class Inventory<T> where T : Item

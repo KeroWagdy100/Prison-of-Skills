@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 using Spectre.Console;
-using zelda_game;
+using prison_of_skills;
 
 Game Game = new();
 Game.Init("json/Game.json");

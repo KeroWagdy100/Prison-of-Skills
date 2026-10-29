@@ -1,10 +1,10 @@
 
-namespace zelda_game;
+namespace prison_of_skills;
 
 public class Bag : Inventory<Skill>
 {
-    public int SkillCost {get; set;} = 0;
-    public int TimeWasted {get; set;} = 0;
+    public int SkillCost { get; set; } = 0;
+    public int TimeWasted { get; set; } = 0;
 
     public int TotalCost => SkillCost + TimeWasted;
     public int TotalPoints { get; set; } = 0;

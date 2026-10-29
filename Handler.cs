@@ -1,6 +1,6 @@
 using Spectre.Console;
 
-namespace zelda_game;
+namespace prison_of_skills;
 
 /* Command Handler */
 
