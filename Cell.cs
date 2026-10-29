@@ -22,6 +22,8 @@ public class Cell
 
     public bool HasSkill(Guid skillId)
         => _skills.HasItem(skillId);
+    
+    public bool IsFinalCell {get; set;} = false;
 
     public List<Skill> GetSkills()
         => _skills.GetItems();

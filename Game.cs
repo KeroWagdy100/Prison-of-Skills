@@ -1,9 +1,10 @@
+using Spectre.Console;
+
 namespace zelda_game;
 
 public class Game
 {
     private bool IsRunning { get; set; } = false;
-    private readonly Player Player = new();
 
     private Cell[,] Cells { get; set; } = new Cell[1, 1];
     private Movement Movement { get; set; } = new(1, 1);
@@ -86,6 +87,60 @@ public class Game
 
         if (costChanged)
             Console.Story($"You now have {4*12 - MyBag.TotalCost} months left.");
+        
+        if (CurrentCell.IsFinalCell)
+        {
+            EndGame();
+        }
+    }
+
+    public void EndGame()
+    {
+        bool passed = MyBag.TotalPoints >= 300;
+
+        HashSet<SkillType> typesGained = [];
+        foreach (var skill in MyBag.GetItems())
+            typesGained.Add(skill.Type);
+        
+        List<SkillType> minimumSetOfTypes = [
+            SkillType.LANGUAGE,
+            SkillType.DATABASE,
+            SkillType.DSA,
+            SkillType.GENERIC,
+            SkillType.TECHNOLOGY
+        ];
+
+        foreach (SkillType type in minimumSetOfTypes)
+            passed &= typesGained.Contains(type);
+        
+        DateTime tomorrow = DateTime.Today.AddDays(1).AddHours(18);
+        if (passed)
+        {
+            Console.SlowPrint($"Finally.. you got an email responding to your internship program application.\n\t\"Your application stood out to us, and we would like to invite you for an interview to discuss your qualifications. \n\tAre you available tomorrow {tomorrow:M} on {tomorrow:t}?\"\nAfter getting {MyBag.TotalPoints} points  and gaining skills from types ({string.Join(',', typesGained)}).\nYou're more than ready to pass this interview.\n");
+
+            AnsiConsole.Status()
+            .Start("Interviewing...", ctx =>
+            {
+                Thread.Sleep(3000);
+            });
+  
+            
+            Console.NormalText($"[green][bold]Interview Passed[/] - You got accepted in the job.\nGood Luck in your career and don't forget to send me a referral [blue underline link=https://www.linkedin.com/in/kerowagdy/]@linkedin: [bold]Kero Wagdy[/][/] :glowing_star::winking_face:[/]");
+        }
+        else
+        {
+            Console.SlowPrint($"Finally.. you got an email responding to your internship program application.\n\t\"Your application stood out to us, and we would like to invite you for an interview to discuss your qualifications. \n\tAre you available tomrrow {tomorrow:M} on {tomorrow:t}?\"\nAfter getting {MyBag.TotalPoints} points  and gaining skills from types ({string.Join(',', typesGained)}).\nYou're not ready to pass the interview.\n");
+
+            AnsiConsole.Status()
+            .Start("Interviewing...", ctx =>
+            {
+                Thread.Sleep(3000);
+            });
+
+            Console.NormalText($"[red][bold]Interview Failed[/] - The recruiter smashed you and cut your CV in front of you.\nDon't try to connect with me [blue underline link=https://www.linkedin.com/in/kerowagdy]@linkedin: [bold]Kero Wagdy[/][/] you loser :angry_face: [/]");
+        }
+
+        Exit();
     }
 
     public void Pick(Guid skillId)

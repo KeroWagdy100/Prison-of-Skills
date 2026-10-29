@@ -123,6 +123,10 @@ public class GameLoader
                 else
                     Logger.Error($"Skill {skillName} is not found!");
             }
+
+            if (dto.X == 2 && dto.Y == 3)
+                cell.IsFinalCell = true;
+                
         }
         Logger.Log($"---- ------ ----");
     }
