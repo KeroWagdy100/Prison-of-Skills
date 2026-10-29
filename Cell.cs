@@ -14,6 +14,8 @@ public class Cell
     public void AddObstacle(Guid obstacleId)
         => _obstacles.Add(obstacleId);
 
+    public bool RemoveObstacle(Guid obstacleId)
+        => _obstacles.Drop(obstacleId);
 
     public void ShowInfo()
     {

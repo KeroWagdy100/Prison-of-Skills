@@ -80,6 +80,8 @@ public class Game
             {
                 Console.SlowPrint($"{obs.TrapText}");
                 Console.Story($"You could have avoided wasting [bold red]{obs.TimeCost} months[/] if you had learned any {obs.DefeatedBy} skill. :crying_face:");
+
+                CurrentCell.RemoveObstacle(obs.ID);
                 MyBag.TimeWasted += obs.TimeCost;
                 costChanged = true;
             }
