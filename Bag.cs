@@ -3,7 +3,10 @@ namespace zelda_game;
 
 public class Bag : Inventory<Skill>
 {
-    public int TotalCost { get; set; } = 0;
+    public int SkillCost {get; set;} = 0;
+    public int TimeWasted {get; set;} = 0;
+
+    public int TotalCost => SkillCost + TimeWasted;
     public int TotalPoints { get; set; } = 0;
 
     public override bool Drop(Guid skillId)
@@ -14,7 +17,7 @@ public class Bag : Inventory<Skill>
 
         if (base.Drop(skillId))
         {
-            TotalCost -= skill.TimeCost;
+            SkillCost -= skill.TimeCost;
             TotalPoints -= skill.Strength;
             return true;
         }
@@ -28,20 +31,22 @@ public class Bag : Inventory<Skill>
             return;
 
         base.Add(skillId);
-        TotalCost += skill.TimeCost;
+        SkillCost += skill.TimeCost;
         TotalPoints += skill.Strength;
     }
 
     public override string ToString()
     {
         var list = GetItems();
+        string costForSkills = $"[grey]Skills took: [blue bold]{SkillCost} months[/][/]";
+        string wastedTime = $"[grey]Time Wasted: [red bold]{TimeWasted} months[/][/]";
+        string remainingTime = $"[grey italic]You have [white bold]{4 * 12 - TotalCost} months[/] remaning.[/]";
+        string currenPoints = $"[grey]You currently have [bold green]{TotalPoints} points[/][/]";
+
         if (list.Count == 0)
-            return $"Bag of skills is currently empty :pleading_face:";
-        else
-            return
-              $"Bag of Skills:\n- {string.Join("\n- ", list)}\n"
-            + $"\t[grey]Total time cost: [blue bold]{TotalCost} months[/]"
-            + $", [italic]You have [white bold]{4 * 12 - TotalCost} months[/] remaning.[/][/]\n"
-            + $"\t[grey]You currently have [bold green]{TotalPoints} points[/][/]";
+            return (TimeWasted == 0 ? "" : wastedTime + "\n") + $"Bag of skills is currently empty :pleading_face:";
+        return
+            $"Bag of Skills:\n- {string.Join("\n- ", list)}\n"
+        + $"\t{costForSkills}{(TimeWasted == 0 ? "" : ", " + wastedTime)}\n\t{remainingTime}\n\t{currenPoints}";
     }
 }

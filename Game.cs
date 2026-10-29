@@ -78,7 +78,7 @@ public class Game
             else
             {
                 Console.SlowPrint($"OOPS... you've wasted {obs.TimeCost} months becuase you don't have the required skill type {obs.DefeatedBy}");
-                MyBag.TotalCost += obs.TimeCost;
+                MyBag.TimeWasted += obs.TimeCost;
                 costChanged = true;
             }
         }
