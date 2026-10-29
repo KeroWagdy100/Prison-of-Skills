@@ -72,9 +72,18 @@ public static class Console
                 .SearchPlaceholderText("Type to search...")
         );
 
+    public static void Note(string note)
+    {
+        var text = new Text(
+            note,
+            new Style(Color.Grey).Decoration(Decoration.Dim).Decoration(Decoration.Italic)
+        ).RightJustified();
+        AnsiConsole.Write(text);
+    }
+
     public static void SlowPrint(string text)
     {
-        AnsiConsole.MarkupLine("[dim italic on black]Press Space/Enter to fast forward, Escape to skip[/]");
+        Note("Press Space/Enter to fast forward, Escape to skip");
         text = AnsiMarkup.Remove(text);
         Random random = new();
         bool skip = false, fastForward = false;
@@ -110,4 +119,43 @@ public static class Console
         AnsiConsole.WriteLine();
     }
 
+    public static void PrintTable(this Inventory<Skill> inv, string? title = null, bool addCaption = false)
+    {
+        var skills = inv.GetItems();
+        if (skills.Count == 0)
+        {
+            Warning($"Bag of skills is currently empty :pleading_face:");
+            return;
+        }
+
+        var table = new Table();
+        table.AddColumns("Skill", "of type", "costs", "adds");
+        table.SimpleHeavyBorder();
+
+        if (!string.IsNullOrEmpty(title))
+            table.Title(title);
+
+        int totalCost = 0, totalPoints = 0;
+        foreach (var skill in skills)
+        {
+            table.AddRow(
+                $"[bold]{skill.Name}[/]",
+                skill.Type.ToString(),
+                $"[blue]{skill.TimeCost} months[/]",
+                $"[green][bold]{skill.Strength}[/] points[/]"
+            );
+            totalCost += skill.TimeCost;
+            totalPoints += skill.Strength;
+        }
+
+        table.Columns[0].Footer = new Text($"Total");
+        table.Columns[1].Footer = new Text($"{skills.Count} skills", new Style(foreground: Color.Yellow));
+        table.Columns[2].Footer = new Text($"{totalCost} months", new Style(foreground: Color.Blue));
+        table.Columns[3].Footer = new Text($"{totalPoints} points", new Style(foreground: Color.Green, decoration: Decoration.Bold));
+
+        if (addCaption)
+            table.Caption($"[italic cyan]{4 * 12 - totalCost} months remaining[/]");
+
+        AnsiConsole.Write(table);
+    }
 }

@@ -19,7 +19,7 @@ public class Cell
 
     public void ShowInfo()
     {
-        Console.NormalText(_skills.ToString());
+        _skills.PrintTable("Cell Skills");
     }
 
     public bool HasSkill(Guid skillId)

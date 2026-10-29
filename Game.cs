@@ -33,6 +33,23 @@ public class Game
     {
         IsRunning = true;
         System.Console.Clear();
+
+        var appName = new FigletText("Prison of Skills")
+        {
+            Color = Color.Blue,
+            Justification = Justify.Center
+        };
+
+        var version = new Text("Version 0.1.1", new Style(Color.Grey))
+        {
+            Justification = Justify.Center
+        };
+
+        AnsiConsole.Write(appName);
+        AnsiConsole.Write(version);
+        AnsiConsole.WriteLine();
+
+        // AnsiConsole.Write(new FigletText("Prison of Skills").Centered());
         ShowIntro();
         ShowCommands();
 
@@ -47,6 +64,7 @@ public class Game
 
             Handler.Handle(line);
         }
+
     }
 
     public void ShowIntro()
@@ -159,7 +177,6 @@ public class Game
         CurrentCell.TakeSkill(skillId);
         MyBag.Add(skillId);
         Console.Confirm($"Picked [bold]{skill.Name}[/].\n");
-        ShowBag();
     }
 
     public void Drop(Guid skillId)
@@ -181,7 +198,8 @@ public class Game
 
     public void ShowBag()
     {
-        Console.NormalText(MyBag.ToString());
+        MyBag.PrintTable("Your Bag", true);
+        // Console.NormalText(MyBag.ToString());
     }
 
     public void ShowCell()
@@ -199,8 +217,10 @@ public class Game
 
     public void Restart()
     {
-
+        Console.Warning("Restart feature is not implemented yet.. just run the program again you lazy");
+        IsRunning = false;
     }
+
 
     public void Exit()
         => IsRunning = false;
