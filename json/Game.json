@@ -180,15 +180,15 @@
         {
             "X": 0,
             "Y": 2,
-            "Skills": ["System Design"],
-            "Obstacles": ["AI"],
+            "Skills": ["DSA College Course", "SQLServer"],
+            "Obstacles": null,
             "Description": ""
         },
         {
             "X": 0,
             "Y": 3,
-            "Skills": ["DSA College Course", "SQLServer"],
-            "Obstacles": null,
+            "Skills": ["System Design"],
+            "Obstacles": ["AI"],
             "Description": ""
         },
         {

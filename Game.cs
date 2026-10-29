@@ -93,7 +93,7 @@ public class Game
             if (myBagSkills.Any(skill => skill.Type == obs.DefeatedBy))
             {
                 Console.SlowPrint($"{obs.PassedText}");
-                Console.SlowPrint($"[green]You passed the obstacle without wasting time. :happy_face:[/]");
+                Console.Story($"[green]You passed the obstacle without wasting time. :ghost:[/]");
             }
             else
             {
@@ -172,6 +172,14 @@ public class Game
         if (!CurrentCell.HasSkill(skillId))
         {
             Console.Error($"Error: {skill.Name} is not available in the current room");
+            return;
+        }
+
+
+        if (MyBag.RemainingMonths < skill.TimeCost)
+        {
+            Console.Error($"You have only {MyBag.RemainingMonths} months remaining.");
+            Console.NormalText($"You can drop any skill that costs {skill.TimeCost - MyBag.RemainingMonths} months or more to be able to pick this skill.");
             return;
         }
 
