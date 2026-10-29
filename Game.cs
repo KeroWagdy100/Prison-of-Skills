@@ -40,7 +40,7 @@ public class Game
             Justification = Justify.Center
         };
 
-        var version = new Text("Version 0.1.1", new Style(Color.Grey))
+        var version = new Text("Version 0.1.0", new Style(Color.Grey))
         {
             Justification = Justify.Center
         };
