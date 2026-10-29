@@ -5,9 +5,12 @@ public class Bag : Inventory<Skill>
 {
     public int SkillCost { get; set; } = 0;
     public int TimeWasted { get; set; } = 0;
-
     public int TotalCost => SkillCost + TimeWasted;
+    public int RemainingMonths => 4 * 12 - TotalCost;
+
     public int TotalPoints { get; set; } = 0;
+
+    public bool IsEmpty => _itemIds.Count == 0;
 
     public override bool Drop(Guid skillId)
     {
@@ -33,6 +36,12 @@ public class Bag : Inventory<Skill>
         base.Add(skillId);
         SkillCost += skill.TimeCost;
         TotalPoints += skill.Strength;
+    }
+
+    public void Show()
+    {
+        this.PrintTable("Your Bag",
+        $"[italic]Wasted [red bold]{TimeWasted} months[/] on obstacles\n[cyan]You have {RemainingMonths} months remaining [/][/]");
     }
 
     public override string ToString()

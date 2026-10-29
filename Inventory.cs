@@ -3,7 +3,7 @@ namespace prison_of_skills;
 // A generic container for any type of items
 public class Inventory<T> where T : Item
 {
-    private readonly List<Guid> _itemIds = [];
+    protected readonly List<Guid> _itemIds = [];
 
     public virtual bool Drop(Guid itemId)
     {

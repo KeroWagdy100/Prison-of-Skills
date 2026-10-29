@@ -119,14 +119,9 @@ public static class Console
         AnsiConsole.WriteLine();
     }
 
-    public static void PrintTable(this Inventory<Skill> inv, string? title = null, bool addCaption = false)
+    public static void PrintTable(this Inventory<Skill> inv, string? title = null, string? caption = null)
     {
         var skills = inv.GetItems();
-        if (skills.Count == 0)
-        {
-            Warning($"Bag of skills is currently empty :pleading_face:");
-            return;
-        }
 
         var table = new Table();
         table.AddColumns("Skill", "of type", "costs", "adds");
@@ -153,8 +148,8 @@ public static class Console
         table.Columns[2].Footer = new Text($"{totalCost} months", new Style(foreground: Color.Blue));
         table.Columns[3].Footer = new Text($"{totalPoints} points", new Style(foreground: Color.Green, decoration: Decoration.Bold));
 
-        if (addCaption)
-            table.Caption($"[italic cyan]{4 * 12 - totalCost} months remaining[/]");
+        if (!string.IsNullOrEmpty(caption))
+            table.Caption(caption);
 
         AnsiConsole.Write(table);
     }

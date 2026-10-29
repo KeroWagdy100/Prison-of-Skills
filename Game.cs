@@ -198,8 +198,7 @@ public class Game
 
     public void ShowBag()
     {
-        MyBag.PrintTable("Your Bag", true);
-        // Console.NormalText(MyBag.ToString());
+        MyBag.Show();
     }
 
     public void ShowCell()
