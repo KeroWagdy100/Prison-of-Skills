@@ -3,5 +3,5 @@ using Spectre.Console;
 using zelda_game;
 
 Game Game = new();
-Game.Init("Game.json");
+Game.Init("json/Game.json");
 Game.Run();

@@ -2,7 +2,7 @@ namespace zelda_game;
 
 public static class Logger
 {
-    readonly static public string _logfile = "Game.log";
+    readonly static public string _logfile = "log/Game.log";
     public static void Log(params string[] strings)
     {
         using StreamWriter writer = new(_logfile, true);
