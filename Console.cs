@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Spectre.Console;
 
 namespace prison_of_skills;
@@ -83,12 +82,19 @@ public static class Console
 
     public static void SlowPrint(string text)
     {
-        Note("Press Space/Enter to fast forward, Escape to skip");
+        System.Console.CursorVisible = false;
+
+        Note("Press Space/Enter to fast forward, Escape to skip, Use arrows to change typing speed");
         text = AnsiMarkup.Remove(text);
         Random random = new();
         bool skip = false, fastForward = false;
+
+        int delayInMilliSeconds = 80;
         for (int i = 0; i < text.Length; ++i)
         {
+            AnsiConsole.Markup($"{text[i]}");
+
+
             if (System.Console.KeyAvailable)
             {
                 var keyInfo = System.Console.ReadKey(true);
@@ -101,22 +107,44 @@ public static class Console
                     case ConsoleKey.Enter:
                         fastForward = true;
                         break;
+                    case ConsoleKey.DownArrow:
+                        delayInMilliSeconds += 20;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        delayInMilliSeconds -= 20;
+                        break;
                 }
             }
 
+            delayInMilliSeconds = Math.Clamp(delayInMilliSeconds, 20, 150);
+
             if (skip) break;
+            if (fastForward) delayInMilliSeconds = 0;
 
-            AnsiConsole.Markup($"{text[i]}");
 
-            int delayInMilliSeconds = fastForward ? 0 : random.Next(20, 80);
-            if (text[i] == '\n')
-                delayInMilliSeconds += 200;
+            // New paragraph
+            if (text[i] == '\n' && i > 0 && text[i-1] == '\n') {
+                fastForward = false;
+                NormalText("[italic blue]Continue?[/] [grey italic](press any key to continue, Escape to skip)[/]");
+                var key = System.Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Escape) {
+                    skip = true;
+                    break;
+                }
+
+                continue;
+            }
             Thread.Sleep(delayInMilliSeconds);
         }
 
-        if (skip)
-            AnsiConsole.MarkupLine("[italic]...Skipped[/]");
+        if (skip) { 
+            // AnsiConsole.MarkupLine("[italic]...Skipped[/]");
+            AnsiConsole.Clear();
+        }
         AnsiConsole.WriteLine();
+
+        System.Console.CursorVisible = true;
     }
 
     public static void PrintTable(this Inventory<Skill> inv, string? title = null, string? caption = null)
