@@ -8,8 +8,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Spectre.Console" Version="0.57.2" />
+    <ItemGroup>
+        <PackageReference Include="Spectre.Console" Version="0.57.2" />
+        <Content Include="assets\**">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+
   </ItemGroup>
 
 </Project>

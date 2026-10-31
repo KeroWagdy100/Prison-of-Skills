@@ -1,6 +1,6 @@
 {
-    "IntroPath": "static_text/Introduction.txt",
-    "CommandsPath": "static_text/Commands.txt",
+    "IntroPath": "assets/static_text/Introduction.txt",
+    "CommandsPath": "assets/static_text/Commands.txt",
     "Rows": 3,
     "Cols": 4,
 
